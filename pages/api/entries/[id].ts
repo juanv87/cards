@@ -31,6 +31,8 @@ export default function handler(
 
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
+  console.log("body", req.body);
+  
 
   await db.connect();
 

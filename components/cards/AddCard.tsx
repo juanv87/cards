@@ -7,6 +7,7 @@ const AddCard = () => {
   const [meaningValue, setMeaningValue] = useState("");
   const [phraseValue, setPhraseValue] = useState("");
   const [descValue, setDescValue] = useState("");
+  const [listValue, setListValue] = useState("");
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -20,9 +21,12 @@ const AddCard = () => {
   const onDescFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     setDescValue(event.target.value);
   };
+  const onListFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
+    setListValue(event.target.value);
+  };
   const onSave = () => {
     if (titleValue.length === 0) return;
-    addNewEntry(titleValue, meaningValue, phraseValue, descValue, "finished");
+    addNewEntry(titleValue, meaningValue, phraseValue, descValue, "finished", listValue);
     settitleValue("");
     setMeaningValue("");
     setPhraseValue("");
@@ -57,7 +61,13 @@ const AddCard = () => {
         onChange={onDescFieldChanges}
         className="py-3 px-2 border-solid border-b-2"
       />
-
+      <input
+        value={listValue}
+        type="text"
+        placeholder="List"
+        onChange={onListFieldChanges}
+        className="py-3 px-2 border-solid border-b-2"
+      />
       <button
         className="mt-5 p-2 border-2 border-solid border-lime-600 rounded-md"
         onClick={onSave}

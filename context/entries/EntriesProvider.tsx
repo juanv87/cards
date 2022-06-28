@@ -36,6 +36,7 @@ export const EntriesProvider: any = ({ children }: any) => {
 
   const updateEntry = async ({
     _id,
+    title,
     description,
     status,
     meaning,
@@ -44,6 +45,7 @@ export const EntriesProvider: any = ({ children }: any) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
         _id,
+        title,
         description,
         status,
         meaning,

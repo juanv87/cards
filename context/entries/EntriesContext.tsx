@@ -8,9 +8,10 @@ interface ContextProps {
     meaning: string,
     phrase: string,
     status: string,
-    description: string
+    description: string,
+    type: string
   ) => void;
-  updateEntry: (entry: Entry) => void;
+  updateEntry: (newEntry: Entry) => void;
 }
 
 export const EntriesContext = createContext({} as ContextProps);
