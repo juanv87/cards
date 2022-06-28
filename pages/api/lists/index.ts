@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../database";
 import { connect, disconnect } from "../../../database/db";
-import { Entry, IEntry } from "../../../models";
+import { List, IList } from "../../../models";
 
 type Data =
   | {
       message: string;
     }
-  | IEntry[]
-  | IEntry;
+  | IList[]
+  | IList;
 
 export default function handler(
   req: NextApiRequest,
@@ -17,46 +17,42 @@ export default function handler(
   // Voy a tener 2 endopints: 1 para crear y otro para recibir
   switch (req.method) {
     case "GET":
-      return getEntries(res);
+      return getLists(res);
 
     case "POST":
-      return postEntry(req, res);
+      return postList(req, res);
 
     default:
       return res.status(400).json({ message: "Endpoint no existe" });
   }
 }
 
-const getEntries = async (res: NextApiResponse<Data>) => {
+const getLists = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const entries = await Entry.find().sort({ createdAt: "ascending" });
+  const lists = await List.find().sort({ createdAt: "ascending" });
   await db.disconnect();
-  res.status(200).json(entries);
+  res.status(200).json(lists);
 };
-const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const postList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const {
-    description,
-    title,
-    meaning,
+    description = "",
+    title = "",
     status = "finished",
-    phrase,
   } = req.body;
 
-  const newEntry = new Entry({
+  const newList = new List({
     description,
     title,
-    meaning,
-    phrase,
     createdAt: Date.now(),
     status,
   });
 
   try {
     await db.connect();
-    await newEntry.save();
+    await newList.save();
     await db.disconnect();
 
-    return res.status(201).json(newEntry);
+    return res.status(201).json(newList);
   } catch (error) {
     await db.disconnect();
     console.log(error);

@@ -1,31 +1,25 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import { EntriesContext } from "../../context/entries";
+import { ListsContext } from "../../context/lists";
 
-const AddCard = () => {
-  const { addNewEntry } = useContext(EntriesContext);
+
+const AddList = () => {
+  const { addNewList } = useContext(ListsContext);
   const [titleValue, settitleValue] = useState("");
-  const [meaningValue, setMeaningValue] = useState("");
-  const [phraseValue, setPhraseValue] = useState("");
   const [descValue, setDescValue] = useState("");
+  const [touched, setTouched] = useState(false);
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
   };
-  const onMeaningFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
-    setMeaningValue(event.target.value);
-  };
-  const onPhraseFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
-    setPhraseValue(event.target.value);
-  };
+  
   const onDescFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     setDescValue(event.target.value);
   };
   const onSave = () => {
     if (titleValue.length === 0) return;
-    addNewEntry(titleValue, meaningValue, phraseValue, descValue, "finished");
+    addNewList(titleValue, descValue, "finished");
+    setTouched(false);
     settitleValue("");
-    setMeaningValue("");
-    setPhraseValue("");
   };
   return (
     <>
@@ -34,20 +28,6 @@ const AddCard = () => {
         type="text"
         placeholder="Title"
         onChange={onTitleFieldChanges}
-        className="py-3 px-2 border-solid border-b-2"
-      />
-      <input
-        value={meaningValue}
-        type="text"
-        placeholder="Meaning"
-        onChange={onMeaningFieldChanges}
-        className="py-3 px-2 border-solid border-b-2"
-      />
-      <input
-        value={phraseValue}
-        type="text"
-        placeholder="Phrase"
-        onChange={onPhraseFieldChanges}
         className="py-3 px-2 border-solid border-b-2"
       />
       <input
@@ -68,4 +48,4 @@ const AddCard = () => {
   );
 };
 
-export default AddCard;
+export default AddList;

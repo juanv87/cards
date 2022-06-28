@@ -1,14 +1,12 @@
-import React, { ChangeEvent, useContext, useState } from "react";
-import AddCard from "../../components/cards/AddCard";
-import CardsList from "../../components/cards/CardsList";
+import React, { useContext } from "react";
 import { ContainerDashBoard } from "../../components/layouts/ContainerDashBoard";
 import { Header } from "../../components/layouts/Header";
 import AddList from "../../components/lists/AddList";
 import ListsList from "../../components/lists/ListsList";
-import { EntriesContext } from "../../context/entries";
 import { UIContext } from "../../context/ui";
 
-const DashBoard = () => {
+const Lists = () => {
+  const { isAddingEntry, setIsAddingEntry } = useContext(UIContext);
 
   return (
     <>
@@ -16,10 +14,8 @@ const DashBoard = () => {
       <ContainerDashBoard>
         <div className="flex">
           <div className="flex flex-col mr-5 w-80">
-            <AddCard />
             <AddList />
           </div>
-          <CardsList status="finished" />
           <ListsList status="finished" />
         </div>
       </ContainerDashBoard>
@@ -27,4 +23,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Lists;
