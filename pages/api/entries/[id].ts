@@ -16,7 +16,7 @@ export default function handler(
 ) {
   const { id } = req.query;
 
-  if (mongoose.isValidObjectId(id)) {
+  if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ message: "El ID no es válido " + id });
   }
 
@@ -49,16 +49,23 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     status = entryToUpdate.status,
   } = req.body;
 
-  const updateEntry = await Entry.findByIdAndUpdate(
-    id,
-    {
-      description,
-      title,
-      meaning,
-      phrase,
-      status,
-    },
-    { runValidators: true, new: true }
-  );
-  res.status(200).json(updateEntry!);
+  try {
+    const updateEntry = await Entry.findByIdAndUpdate(
+      id,
+      {
+        description,
+        title,
+        meaning,
+        phrase,
+        status,
+      },
+      { runValidators: true, new: true }
+    );
+    await db.disconnect();
+    res.status(200).json(updateEntry!);
+  } catch (error: any) {
+    console.log(error);
+    await db.disconnect();
+    res.status(400).json({ message: error.errors.status.message });
+  }
 };
