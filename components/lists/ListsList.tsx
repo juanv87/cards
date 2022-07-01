@@ -13,12 +13,11 @@ const ListsList: FC<Props> = ({ status }) => {
     () => lists.filter((list) => list.status === status),
     [lists]
   );
-  console.log("listsByStatus", listsByStatus);
   return (
     <>
-      <div className="grid grid-cols-12 gap-2 w-full">
-        {listsByStatus.map((lists) => (
-          <div key={lists._id} className="col-span-6">
+      <div className="grid grid-cols-12 gap-5 w-full">
+        {lists.map((lists) => (
+          <div key={lists._id} className="col-span-4 mt-8">
             <SingleList list={lists} />
           </div>
         ))}

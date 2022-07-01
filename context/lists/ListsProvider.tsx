@@ -20,18 +20,43 @@ export const ListsProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(listsReducer, Lists_INITIAL_STATE);
   const addNewList = async (
     title: string,
-    description: string
+    description: string,
+    status: string,
+    slugTitleValue: string,
+    chosenEmoji: string
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
     const { data } = await listsApi.post<List>("/lists", {
       title,
       description,
+      status,
+      slugTitleValue,
+      chosenEmoji,
     });
     dispatch({ type: "[List] Add-List", payload: data });
   };
 
-  const updateList = (list: List) => {
-    dispatch({ type: "[List] List-Updated", payload: list });
+  const updateList = async ({
+    _id,
+    title,
+    description,
+    status,
+    slugTitleValue,
+    chosenEmoji,
+  }: List) => {
+    try {
+      const { data } = await listsApi.put<List>(`/lists/${_id}`, {
+        _id,
+        title,
+        description,
+        status,
+        slugTitleValue,
+        chosenEmoji,
+      });
+      dispatch({ type: "[List] List-Updated", payload: data });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   const refreshLists = async () => {

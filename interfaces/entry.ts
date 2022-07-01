@@ -1,12 +1,15 @@
 export interface Entry {
   _id: string;
-  description?: string;
-  createdAt: number;
-  status?: EntryStatus;
   title: string;
+  description: string;
+  status: EntryStatus;
+  createdAt: number;
   meaning: string;
   phrase: string;
-  type?: string;
+  list: string;
+  fav: boolean;
+  languaje?: string;
+  slugTitleValue: string;
 }
 
-export type EntryStatus = "pending" | "in-progress" | "finished";
+export type EntryStatus = "pending" | "in-progress" | "finished" | "publish";

@@ -7,9 +7,12 @@ interface ContextProps {
     title: string,
     meaning: string,
     phrase: string,
-    status: string,
     description: string,
-    type: string
+    status: string,
+    list: string,
+    fav: boolean,
+    languaje: string,
+    slugTitleValue: string
   ) => void;
   updateEntry: (newEntry: Entry) => void;
 }

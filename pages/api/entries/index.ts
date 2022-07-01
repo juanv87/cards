@@ -29,26 +29,34 @@ export default function handler(
 
 const getEntries = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const entries = await Entry.find().sort({ createdAt: "ascending" });
+  const entries = await Entry.find().sort({ createdAt: "descending" });
   await db.disconnect();
   res.status(200).json(entries);
 };
 const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const {
-    description,
     title,
+    description,
+    status,
     meaning,
-    status = "finished",
     phrase,
+    list,
+    fav,
+    languaje,
+    slugTitleValue,
   } = req.body;
 
   const newEntry = new Entry({
-    description,
     title,
-    meaning,
-    phrase,
-    createdAt: Date.now(),
+    description,
     status,
+    meaning,
+    createdAt: Date.now(),
+    phrase,
+    list,
+    fav,
+    languaje,
+    slugTitleValue,
   });
 
   try {

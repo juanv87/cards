@@ -8,6 +8,10 @@ interface SeedEntry {
   title: string;
   meaning: string;
   phrase: string;
+  list: string;
+  languaje: string;
+  fav: boolean;
+  slugTitleValue: string;
 }
 
 export const seedData: SeedData = {

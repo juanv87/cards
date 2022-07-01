@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../database";
 import { connect } from "../../../database/db";
-import { Entry, IEntry } from "../../../models";
+import { List, IList } from "../../../models";
 
 type Data =
   | {
       message: string;
     }
-  | IEntry;
+  | IList;
 
 export default function handler(
   req: NextApiRequest,
@@ -22,65 +22,63 @@ export default function handler(
 
   switch (req.method) {
     case "PUT":
-      return updateEntry(req, res);
+      return updateList(req, res);
 
     case "GET":
-      return getEntry(req, res);
+      return getList(req, res);
 
     default:
       return res.status(400).json({ message: "El metodo no existe" });
   }
 }
 
-const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const getList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
-  const entryToGet = await Entry.findById(id);
+  const listToGet = await List.findById(id);
   await db.disconnect();
 
-  if (!entryToGet) {
+  if (!listToGet) {
     return res.status(400).json({ message: "No hay entrada con ese ID" });
   }
-  return res.status(200).json(entryToGet);
+  return res.status(200).json(listToGet);
 };
 
-const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const updateList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
 
-  const entryToUpdate = await Entry.findById(id);
+  const listToUpdate = await List.findById(id);
 
-  if (!entryToUpdate) {
+  if (!listToUpdate) {
     await db.disconnect();
     return res.status(400).json({ message: "No hay entrada con ese ID" });
   }
 
   const {
-    description = entryToUpdate.description,
-    title = entryToUpdate.title,
-    meaning = entryToUpdate.meaning,
-    phrase = entryToUpdate.phrase,
-    status = entryToUpdate.status,
-    list = entryToUpdate.list,
+    description = listToUpdate.description,
+    title = listToUpdate.title,
+    status = listToUpdate.status,
+    slugTitleValue = listToUpdate.slugTitleValue,
+    chosenEmoji = listToUpdate.chosenEmoji,
   } = req.body;
 
   try {
-    const updateEntry = await Entry.findByIdAndUpdate(
+    const updateList = await List.findByIdAndUpdate(
       id,
       {
         description,
         title,
-        meaning,
-        phrase,
+        slugTitleValue,
         status,
-        list,
+        chosenEmoji,
       },
       { runValidators: true, new: true }
     );
     await db.disconnect();
-    res.status(200).json(updateEntry!);
+    res.status(200).json(updateList!);
   } catch (error: any) {
     console.log(error);
     await db.disconnect();

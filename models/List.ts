@@ -9,12 +9,9 @@ const listSchema = new Schema({
   createdAt: { type: Number },
   status: {
     type: String,
-    enum: {
-      values: ["pending", "in-progress", "finished"],
-      message: "{VALUE} no es un estado permitido",
-    },
-    default: "finished",
   },
+  slugTitleValue: { type: String },
+  chosenEmoji: { type: String },
 });
 
 const ListModel: Model<IList> =

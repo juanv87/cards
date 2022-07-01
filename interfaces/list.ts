@@ -3,7 +3,9 @@ export interface List {
   title: string;
   description?: string;
   createdAt: number;
-  status?: ListStatus;
+  status: ListStatus;
+  slugTitleValue: string;
+  chosenEmoji: string;
 }
 
-export type ListStatus = "pending" | "in-progress" | "finished";
+export type ListStatus = "pending" | "in-progress" | "finished" | "publish";

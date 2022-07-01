@@ -4,19 +4,23 @@ import { Entry } from "../interfaces";
 export interface IEntry extends Entry {}
 
 const entrySchema = new Schema({
-  description: { type: String },
   title: { type: String },
-  meaning: { type: String },
-  phrase: { type: String },
-  createdAt: { type: Number },
+  description: { type: String },
   status: {
     type: String,
     enum: {
-      values: ["pending", "in-progress", "finished"],
+      values: ["pending", "in-progress", "finished", "publish"],
       message: "{VALUE} no es un estado permitido",
     },
-    default: "finished",
+    default: "publish",
   },
+  meaning: { type: String },
+  phrase: { type: String },
+  createdAt: { type: Number },
+  list: { type: String },
+  fav: { type: Boolean },
+  languaje: { type: String },
+  slugTitleValue: { type: String },
 });
 
 const EntryModel: Model<IEntry> =

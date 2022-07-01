@@ -20,16 +20,26 @@ export const EntriesProvider: any = ({ children }: any) => {
   const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
   const addNewEntry = async (
     title: string,
+    description: string,
+    status: string,
     meaning: string,
     phrase: string,
-    description: string
+    list: string,
+    fav: boolean,
+    languaje: string,
+    slugTitleValue: string
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
     const { data } = await entriesApi.post<Entry>("/entries", {
       title,
+      description,
+      status,
       meaning,
       phrase,
-      description,
+      list,
+      fav,
+      languaje,
+      slugTitleValue,
     });
     dispatch({ type: "[Entry] Add-Entry", payload: data });
   };
@@ -41,6 +51,9 @@ export const EntriesProvider: any = ({ children }: any) => {
     status,
     meaning,
     phrase,
+    list,
+    fav,
+    languaje,
   }: Entry) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
@@ -50,10 +63,13 @@ export const EntriesProvider: any = ({ children }: any) => {
         status,
         meaning,
         phrase,
+        list,
+        fav,
+        languaje,
       });
       dispatch({ type: "[Entry] Entry-Updated", payload: data });
     } catch (error) {
-      console.log({error})
+      console.log({ error });
     }
   };
 
@@ -61,6 +77,8 @@ export const EntriesProvider: any = ({ children }: any) => {
     const { data } = await entriesApi.get<Entry[]>("/entries");
     dispatch({ type: "[Entry] Refresh-Data", payload: data });
   };
+
+  // todo: crear endpoint para traer cards por listas.
 
   useEffect(() => {
     refreshEntries();

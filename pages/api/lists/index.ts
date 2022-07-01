@@ -38,6 +38,8 @@ const postList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     description = "",
     title = "",
     status = "finished",
+    slugTitleValue,
+    chosenEmoji,
   } = req.body;
 
   const newList = new List({
@@ -45,6 +47,8 @@ const postList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     title,
     createdAt: Date.now(),
     status,
+    slugTitleValue,
+    chosenEmoji,
   });
 
   try {
