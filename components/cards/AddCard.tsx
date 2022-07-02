@@ -1,9 +1,15 @@
-import React, { ChangeEvent, useContext, useState } from "react";
+import React, {
+  ChangeEvent,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Editor } from "@tinymce/tinymce-react";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
+import IconSearch from "../icons/IconSearch";
 interface Props {
   currentList?: string;
 }
@@ -18,6 +24,7 @@ const AddCard = ({ currentList }: Props) => {
   const [languajeValue, setLanguajeValue] = useState("");
   const [favValue, setFavValue] = useState(false);
   const [statusValue, setStatusValue] = useState("publish");
+  const [searchIframe, setSearchIframe] = useState(false);
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -33,9 +40,6 @@ const AddCard = ({ currentList }: Props) => {
   };
   const onListFieldChanges = (event: ChangeEvent<HTMLSelectElement>) => {
     setListValue(event.target.value);
-  };
-  const onLanguajeFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
-    setLanguajeValue(event.target.value);
   };
 
   const { lists } = useContext(ListsContext);
@@ -67,23 +71,36 @@ const AddCard = ({ currentList }: Props) => {
     setListValue("");
     setLanguajeValue("");
   };
+  const onSearchWord = () => {
+    settitleValue(titleValue);
+    setSearchIframe(!searchIframe);
+  };
+
   return (
     <>
-      <div className="flex">
-        <div className="grid gap-2 w-1/2 mt-5">
-          <input
-            value={titleValue}
-            type="text"
-            placeholder="Title"
-            onChange={onTitleFieldChanges}
-            className="py-3 px-2 border-none mb-2"
-          />
+      <div className="grid grid-cols-12 gap-5">
+        <div className="grid gap-2 col-span-4 mt-5">
+          <div className="flex gap-3 items-center">
+            <input
+              value={titleValue}
+              type="text"
+              placeholder="Title"
+              onChange={onTitleFieldChanges}
+              className="py-3 px-2 border-none w-full"
+            />
+            <button
+              className="text-sm rounded-md bg-slate-600 hover:bg-slate-700 text-white uppercase p-1 cursor-default"
+              onClick={onSearchWord}
+            >
+              <IconSearch color="white" size="35" />
+            </button>
+          </div>
           <input
             value={meaningValue}
             type="text"
             placeholder="Meaning"
             onChange={onMeaningFieldChanges}
-            className="py-3 px-2 border-none mb-2"
+            className="py-3 px-2 border-none my-2"
           />
           <input
             value={descValue}
@@ -137,7 +154,7 @@ const AddCard = ({ currentList }: Props) => {
             </ContainerBtnSave>
           </div>
         </div>
-        <div className="preview mt-5 min-w-min w-1/3 ml-10">
+        <div className="preview mt-5 min-w-min col-span-4 ">
           <div className="bg-white border-t-8 shadow-xl border-gray-200 p-5 rounded-lg relative">
             <h3 className="text-2xl">{titleValue || "Title"}</h3>
             <p>{meaningValue || "Meaning"}</p>
@@ -156,7 +173,24 @@ const AddCard = ({ currentList }: Props) => {
             <p className="mt-5">List: {listValue || "___"}</p>{" "}
           </div>
         </div>
+        <div className="col-span-4">
+          {searchIframe && (
+            <>
+              <iframe
+                src={`https://dictionary.cambridge.org/es/diccionario/ingles/${titleValue}`}
+                height="500"
+                title="Iframe Example"
+              ></iframe>
+            </>
+          )}
+        </div>
       </div>
+      <style jsx>{`
+        iframe {
+          width: 100%;
+          margin-top: 20px;
+        }
+      `}</style>
     </>
   );
 };

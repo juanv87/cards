@@ -17,7 +17,7 @@ const ListsList: FC<Props> = ({ status }) => {
     <>
       <div className="grid grid-cols-12 gap-5 w-full">
         {lists.map((lists) => (
-          <div key={lists._id} className="col-span-4 mt-8">
+          <div key={lists._id} className="col-span-3 mt-8">
             <SingleList list={lists} />
           </div>
         ))}

@@ -20,8 +20,8 @@ const CardsList: FC<Props> = ({ status }) => {
   return (
     <>
       <div className="flex gap-5">
-        <SingleCardQuiz entry={randomEntry} />
-        <SingleCardQuizOptions entries={entries} entry={randomEntry} />
+        <SingleCardQuiz entries={entries} />
+        {/* <SingleCardQuizOptions entries={entries} entry={randomEntry} /> */}
       </div>
       <div className="grid grid-cols-12 gap-5 w-full">
         {entriesByStatus.map((entry) => (

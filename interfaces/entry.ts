@@ -10,6 +10,7 @@ export interface Entry {
   fav: boolean;
   languaje?: string;
   slugTitleValue: string;
+  memoCount: number;
 }
 
 export type EntryStatus = "pending" | "in-progress" | "finished" | "publish";

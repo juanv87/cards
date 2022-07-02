@@ -4,15 +4,18 @@ import { AuthProvider } from "../context/authContext";
 import { UIProvider } from "../context/ui/UIProvider";
 import { EntriesProvider } from "../context/entries";
 import { ListsProvider } from "../context/lists";
+import { NotesProvider } from "../context/notes";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <ListsProvider>
         <EntriesProvider>
-          <UIProvider>
-            <Component {...pageProps} />;
-          </UIProvider>
+          <NotesProvider>
+            <UIProvider>
+              <Component {...pageProps} />;
+            </UIProvider>
+          </NotesProvider>
         </EntriesProvider>
       </ListsProvider>
     </AuthProvider>

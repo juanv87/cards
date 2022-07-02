@@ -27,7 +27,8 @@ export const EntriesProvider: any = ({ children }: any) => {
     list: string,
     fav: boolean,
     languaje: string,
-    slugTitleValue: string
+    slugTitleValue: string,
+    memoCount: number
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
     const { data } = await entriesApi.post<Entry>("/entries", {
@@ -40,6 +41,7 @@ export const EntriesProvider: any = ({ children }: any) => {
       fav,
       languaje,
       slugTitleValue,
+      memoCount,
     });
     dispatch({ type: "[Entry] Add-Entry", payload: data });
   };
@@ -54,6 +56,7 @@ export const EntriesProvider: any = ({ children }: any) => {
     list,
     fav,
     languaje,
+    memoCount,
   }: Entry) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
@@ -66,6 +69,7 @@ export const EntriesProvider: any = ({ children }: any) => {
         list,
         fav,
         languaje,
+        memoCount,
       });
       dispatch({ type: "[Entry] Entry-Updated", payload: data });
     } catch (error) {

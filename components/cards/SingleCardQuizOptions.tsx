@@ -26,12 +26,6 @@ const SingleCardQuizOptions = ({ entry, entries }: Props) => {
           <h2 className="text-xl text-center mb-2">&#x1F4A1; Quiz</h2>
           <p className="text-center">Elije una respuesta:</p>
           <h3 className="text-2xl text-center">{entry?.title}</h3>
-          <button
-            onClick={() => setShowAnswer(true)}
-            className="m-auto mt-5 flex justify-center"
-          >
-            {!showAnswer && "Ver respuesta"}
-          </button>
           <ul>
             {entriesByList.map(({ meaning, _id }) => (
               <li key={_id}>{meaning}</li>

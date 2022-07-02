@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../database";
-import { connect } from "../../../database/db";
-import { Entry, IEntry } from "../../../models";
+import { db } from "../../../../database";
+import { Entry, IEntry } from "../../../../models";
 
 type Data =
   | {
@@ -14,12 +12,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { id } = req.query;
-
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: "El ID no es válido " + id });
-  }
-
   switch (req.method) {
     case "PUT":
       return updateEntry(req, res);
@@ -64,6 +56,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     phrase = entryToUpdate.phrase,
     status = entryToUpdate.status,
     list = entryToUpdate.list,
+    memoCount = entryToUpdate.memoCount,
   } = req.body;
 
   try {
@@ -76,6 +69,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         phrase,
         status,
         list,
+        memoCount,
       },
       { runValidators: true, new: true }
     );

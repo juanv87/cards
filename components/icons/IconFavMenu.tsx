@@ -1,13 +1,13 @@
 import React from "react";
 
-const IconFavMenu = () => {
+const IconFavMenu = ({ size = "30" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       role="img"
-      width="30"
-      height="30"
+      width={size}
+      height={size}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 24 24"
     >

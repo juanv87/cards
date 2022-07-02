@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import { ListsContext } from "../../context/lists";
-import Picker from "emoji-picker-react";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
 import { listEmojis } from "../emojis";
@@ -109,9 +108,12 @@ const AddList = () => {
               </span>
               <h3 className="text-2xl">{titleValue || "Title"}</h3>
             </div>
-            <p className="text-base italic cursor-default transition-all">
-              {descValue || "Description"}
-            </p>
+            <div
+              className="max-h-40 text-base pb-5 text-gray-800 max-w-full pr-5"
+              dangerouslySetInnerHTML={{
+                __html: descValue || "Description",
+              }}
+            />
           </div>
         </div>
       </div>

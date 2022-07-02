@@ -5,7 +5,7 @@ export interface List {
   createdAt: number;
   status: ListStatus;
   slugTitleValue: string;
-  chosenEmoji: string;
+  chosenEmoji?: string;
 }
 
 export type ListStatus = "pending" | "in-progress" | "finished" | "publish";

@@ -12,7 +12,8 @@ interface ContextProps {
     list: string,
     fav: boolean,
     languaje: string,
-    slugTitleValue: string
+    slugTitleValue: string,
+    memoCount?: any
   ) => void;
   updateEntry: (newEntry: Entry) => void;
 }

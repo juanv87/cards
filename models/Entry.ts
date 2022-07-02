@@ -21,6 +21,7 @@ const entrySchema = new Schema({
   fav: { type: Boolean },
   languaje: { type: String },
   slugTitleValue: { type: String },
+  memoCount: { type: Number, default: 0 },
 });
 
 const EntryModel: Model<IEntry> =
