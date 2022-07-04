@@ -4,4 +4,5 @@ export interface Note {
   description?: string;
   createdAt: number;
   content: string;
+  list: string;
 }

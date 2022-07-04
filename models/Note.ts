@@ -8,6 +8,7 @@ const noteSchema = new Schema({
   content: { type: String },
   createdAt: { type: Number },
   description: { type: String },
+  list: { type: String },
 });
 
 const NoteModel: Model<INote> =

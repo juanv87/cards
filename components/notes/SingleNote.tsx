@@ -18,6 +18,7 @@ const SingleNote = ({ note }: Props) => {
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
   const [contentValue, setContentValue] = useState("");
+  const [listValue, setListValue] = useState("");
 
   const { title, description, content } = note;
   const { updateNote } = useContext(NotesContext);
@@ -26,6 +27,7 @@ const SingleNote = ({ note }: Props) => {
     title: titleValue !== "" ? titleValue : title,
     description: descriptionValue !== "" ? descriptionValue : description,
     content: contentValue !== "" ? contentValue : content,
+    list: listValue !== "" ? listValue : note.list,
   };
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +39,9 @@ const SingleNote = ({ note }: Props) => {
   const onContentFieldChanges = (content: any) => {
     setContentValue(content);
   };
+  const onListFieldChanges = (event: ChangeEvent<HTMLSelectElement>) => {
+    setListValue(event.target.value);
+  };
 
   const onUpdate = () => {
     updateNote(newNoteUpdate);
@@ -45,6 +50,7 @@ const SingleNote = ({ note }: Props) => {
   const onNoteEdit = () => {
     setNoteEdit(true);
   };
+  const { lists } = useContext(ListsContext);
   return (
     <>
       <ContainerCard>
@@ -56,16 +62,12 @@ const SingleNote = ({ note }: Props) => {
           </h3>
         )}
         {noteEdit && (
-          <>
-            <div className="fles items-center">
-              <input
-                value={titleValue || title}
-                type="text"
-                onChange={onTitleFieldChanges}
-                className="py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
-              />
-            </div>
-          </>
+          <input
+            value={titleValue || title}
+            type="text"
+            onChange={onTitleFieldChanges}
+            className="w-full py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
+          />
         )}
         {!noteEdit && (
           <p className="text-base flex gap-1 mb-2">
@@ -73,16 +75,12 @@ const SingleNote = ({ note }: Props) => {
           </p>
         )}
         {noteEdit && (
-          <>
-            <div className="fles items-center">
-              <input
-                value={descriptionValue || description}
-                type="text"
-                onChange={onDescFieldChanges}
-                className="py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
-              />
-            </div>
-          </>
+          <input
+            value={descriptionValue || description}
+            type="text"
+            onChange={onDescFieldChanges}
+            className="w-full py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
+          />
         )}
         {!noteEdit && (
           <div
@@ -109,6 +107,20 @@ const SingleNote = ({ note }: Props) => {
             }}
             onEditorChange={onContentFieldChanges}
           />
+        )}
+        {noteEdit && (
+          <select
+            className="px-4 py-3 w-full"
+            onChange={onListFieldChanges}
+            name="lists"
+            id="lists"
+          >
+            {lists.map(({ _id, title, chosenEmoji }) => (
+              <option className="text-lg" selected key={_id} value={title}>
+                {chosenEmoji} {title}
+              </option>
+            ))}
+          </select>
         )}
         {!noteEdit && (
           <button

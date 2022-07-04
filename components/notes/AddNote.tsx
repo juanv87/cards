@@ -3,12 +3,14 @@ import { NotesContext } from "../../context/notes";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
 import { Editor } from "@tinymce/tinymce-react";
+import { ListsContext } from "../../context/lists";
 
 const AddNote = () => {
   const { addNewNote } = useContext(NotesContext);
   const [titleValue, settitleValue] = useState("");
   const [descValue, setDescValue] = useState("");
   const [contentValue, setContentValue] = useState("");
+  const [listValue, setListValue] = useState("");
   const [touched, setTouched] = useState(false);
   const [chosenEmoji, setChosenEmoji] = useState("");
 
@@ -26,14 +28,19 @@ const AddNote = () => {
   const onContentFieldChanges = (content: any) => {
     setContentValue(content);
   };
+  const onListFieldChanges = (event: ChangeEvent<HTMLSelectElement>) => {
+    setListValue(event.target.value);
+  };
   const onSave = () => {
     if (titleValue.length === 0) return;
-    addNewNote(titleValue, descValue, contentValue);
+    addNewNote(titleValue, descValue, contentValue, listValue);
     setTouched(false);
     settitleValue("");
     setDescValue("");
     setContentValue("");
+    setListValue("");
   };
+  const { lists } = useContext(ListsContext);
   return (
     <>
       <div className="flex">
@@ -68,7 +75,18 @@ const AddNote = () => {
             }}
             onEditorChange={onContentFieldChanges}
           />
-
+          <select
+            className="px-4 py-3 w-full"
+            onChange={onListFieldChanges}
+            name="lists"
+            id="lists"
+          >
+            {lists.map(({ _id, title, chosenEmoji }) => (
+              <option className="text-lg" selected key={_id} value={title}>
+                {chosenEmoji} {title}
+              </option>
+            ))}
+          </select>
           <div className="flex justify-end">
             <ContainerBtnSave>
               <button
@@ -91,6 +109,7 @@ const AddNote = () => {
                 __html: contentValue || "Content",
               }}
             />
+            <p>{listValue}</p>
           </div>
         </div>
       </div>

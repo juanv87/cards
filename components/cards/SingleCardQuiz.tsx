@@ -16,13 +16,14 @@ interface Props {
 const SingleCardQuiz = ({ entries, entrySlug }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [reloadCard, setReloadCard] = useState(true);
-  const entryBySlug = useMemo(
+  const entriesByList = useMemo(
     () => entries.filter(({ list }) => list === entrySlug),
     [entries]
   );
 
-  const entry = entryBySlug[Math.floor(Math.random() * entryBySlug.length)];
-  const entryFix = entryBySlug[Math.floor(Math.random() * entryBySlug.length)];
+  const entry = entriesByList[Math.floor(Math.random() * entriesByList.length)];
+  const entryFix =
+    entriesByList[Math.floor(Math.random() * entriesByList.length)];
 
   let memoCountValue = entry?.memoCount;
 

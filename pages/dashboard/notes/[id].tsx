@@ -45,6 +45,14 @@ const SingleNotePage = ({ note }: Props) => {
               }}
             />
           )}
+          {content && (
+            <div
+              className="max-h-72 mt-5 text-lg pb-5 text-gray-800 content max-w-full pr-5"
+              dangerouslySetInnerHTML={{
+                __html: content,
+              }}
+            />
+          )}
           <button className="" onClick={() => setAddCard(!addCard)}>
             <div className="flex items-center gap-2 rounded-full bg-green-600 p-3 shadow-md fixed z-50 right-20 bottom-20">
               <IconAddCard color="white" />

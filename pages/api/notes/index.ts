@@ -34,13 +34,14 @@ const getNotes = async (res: NextApiResponse<Data>) => {
   res.status(200).json(notes);
 };
 const postNote = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { description = "", title = "", content = "" } = req.body;
+  const { description = "", title = "", content = "", list = "" } = req.body;
 
   const newNote = new Note({
     description,
     title,
     createdAt: Date.now(),
     content,
+    list,
   });
 
   try {

@@ -21,24 +21,33 @@ export const NotesProvider = ({ children }: any) => {
   const addNewNote = async (
     title: string,
     description: string,
-    content: string
+    content: string,
+    list: string
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
     const { data } = await notesApi.post<Note>("/notes", {
       title,
       description,
       content,
+      list,
     });
     dispatch({ type: "[Note] Add-Note", payload: data });
   };
 
-  const updateNote = async ({ _id, title, description, content }: Note) => {
+  const updateNote = async ({
+    _id,
+    title,
+    description,
+    content,
+    list,
+  }: Note) => {
     try {
       const { data } = await notesApi.put<Note>(`/notes/${_id}`, {
         _id,
         title,
         description,
         content,
+        list,
       });
       dispatch({ type: "[Note] Note-Updated", payload: data });
     } catch (error) {

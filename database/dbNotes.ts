@@ -17,3 +17,10 @@ export const getEntriesByNote = async (id: string): Promise<INote | null> => {
   await db.disconnect();
   return JSON.parse(JSON.stringify(note));
 };
+
+export const getNotesByList = async (list: string): Promise<INote | null> => {
+  await db.connect();
+  const note = await Note.find({ list: list }).exec();
+  await db.disconnect();
+  return JSON.parse(JSON.stringify(note));
+};
