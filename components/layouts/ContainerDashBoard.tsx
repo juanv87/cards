@@ -16,7 +16,7 @@ export const ContainerDashBoard = ({ children }: Props) => {
     setShowItems(!showItems);
   };
   return (
-    <div className="mx-auto bg-gray-100 h-vh">
+    <div className="mx-auto bg-gray-100">
       <div className="grid grid-cols-12 h-full">
         <div
           className={`${

@@ -88,12 +88,12 @@ const AddCard = ({ currentList }: Props) => {
               onChange={onTitleFieldChanges}
               className="py-3 px-2 border-none w-full"
             />
-            <button
+            {/* <button
               className="text-sm rounded-md bg-slate-600 hover:bg-slate-700 text-white uppercase p-1 cursor-default"
               onClick={onSearchWord}
             >
               <IconSearch color="white" size="35" />
-            </button>
+            </button> */}
           </div>
           <input
             value={meaningValue}
@@ -174,7 +174,7 @@ const AddCard = ({ currentList }: Props) => {
           </div>
         </div>
         <div className="col-span-4">
-          {searchIframe && (
+          {/* {searchIframe && (
             <>
               <iframe
                 src={`https://dictionary.cambridge.org/es/diccionario/ingles/${titleValue}`}
@@ -182,7 +182,7 @@ const AddCard = ({ currentList }: Props) => {
                 title="Iframe Example"
               ></iframe>
             </>
-          )}
+          )} */}
         </div>
       </div>
       <style jsx>{`

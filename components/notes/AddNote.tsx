@@ -4,19 +4,15 @@ import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
 import { Editor } from "@tinymce/tinymce-react";
 import { ListsContext } from "../../context/lists";
-
-const AddNote = () => {
+interface Props {
+  currentList?: string;
+}
+const AddNote = ({ currentList }: Props) => {
   const { addNewNote } = useContext(NotesContext);
   const [titleValue, settitleValue] = useState("");
   const [descValue, setDescValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [listValue, setListValue] = useState("");
-  const [touched, setTouched] = useState(false);
-  const [chosenEmoji, setChosenEmoji] = useState("");
-
-  const onEmojiClick = (event: ChangeEvent<HTMLSelectElement>) => {
-    setChosenEmoji(event.target.value);
-  };
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -33,8 +29,7 @@ const AddNote = () => {
   };
   const onSave = () => {
     if (titleValue.length === 0) return;
-    addNewNote(titleValue, descValue, contentValue, listValue);
-    setTouched(false);
+    addNewNote(titleValue, descValue, contentValue, currentList || listValue);
     settitleValue("");
     setDescValue("");
     setContentValue("");
@@ -75,18 +70,20 @@ const AddNote = () => {
             }}
             onEditorChange={onContentFieldChanges}
           />
-          <select
-            className="px-4 py-3 w-full"
-            onChange={onListFieldChanges}
-            name="lists"
-            id="lists"
-          >
-            {lists.map(({ _id, title, chosenEmoji }) => (
-              <option className="text-lg" selected key={_id} value={title}>
-                {chosenEmoji} {title}
-              </option>
-            ))}
-          </select>
+          {!currentList && (
+            <select
+              className="px-4 py-3 w-full"
+              onChange={onListFieldChanges}
+              name="lists"
+              id="lists"
+            >
+              {lists.map(({ _id, title, chosenEmoji }) => (
+                <option className="text-lg" selected key={_id} value={title}>
+                  {chosenEmoji} {title}
+                </option>
+              ))}
+            </select>
+          )}
           <div className="flex justify-end">
             <ContainerBtnSave>
               <button

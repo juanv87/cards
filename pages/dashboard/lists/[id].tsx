@@ -14,6 +14,8 @@ import { List, Note } from "../../../interfaces";
 import LoaderCards from "../../../components/loaders/LoaderCards";
 import SingleCardQuizNote from "../../../components/cards/SingleCardQuizNote";
 import SingleNote from "../../../components/notes/SingleNote";
+import AddNote from "../../../components/notes/AddNote";
+import { ContainerBtnAdd } from "../../../components/layouts/ContainerBtnAdd";
 
 interface Props {
   list: List;
@@ -26,6 +28,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
   // todo: traer listas filtradas por el id
   const { title, slugTitleValue, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
+  const [addNote, setAddNote] = useState(false);
   const { entries } = useContext(EntriesContext);
   const entryBySlug = useMemo(
     () => entries.filter(({ list }) => list === slugTitleValue),
@@ -37,9 +40,29 @@ const SingleListPage = ({ list, notesByList }: Props) => {
       <Header />
       <ContainerDashBoard>
         <div className="w-full mt-10">
-          <div className="flex items-center gap-2 mt-5">
-            <div className="text-5xl">{chosenEmoji}</div>
-            <h2 className="text-5xl font-semibold">{title}</h2>
+          <div className="grid grid-cols-12">
+            <div className="col-span-6">
+              <div className="flex items-center gap-2 mt-5">
+                <div className="text-5xl">{chosenEmoji}</div>
+                <h2 className="text-5xl font-semibold">{title}</h2>
+              </div>
+            </div>
+            <div className="col-span-6">
+              <div className="flex justify-end gap-5">
+                <button className="" onClick={() => setAddCard(!addCard)}>
+                  <ContainerBtnAdd>
+                    <IconAddCard color="white" />
+                    Add Card
+                  </ContainerBtnAdd>
+                </button>
+                <button className="" onClick={() => setAddNote(!addNote)}>
+                  <ContainerBtnAdd>
+                    <IconAddCard color="white" />
+                    Add Note
+                  </ContainerBtnAdd>
+                </button>
+              </div>
+            </div>
           </div>
           {description && (
             <div
@@ -49,43 +72,43 @@ const SingleListPage = ({ list, notesByList }: Props) => {
               }}
             />
           )}
-          <button className="" onClick={() => setAddCard(!addCard)}>
-            <div className="flex items-center gap-2 rounded-full bg-green-600 p-3 shadow-md fixed z-50 right-20 bottom-20">
-              <IconAddCard color="white" />
-            </div>
-          </button>
         </div>
         {addCard && <AddCard currentList={slugTitleValue} />}
-        <div className="flex gap-5">
-          <SingleCardQuizNote
-            entries={entries}
-            listSlug={slugTitleValue}
-            list={title}
-          />
-          <SingleCardQuiz entrySlug={slugTitleValue} entries={entries} />
-          <SingleCardQuizWithDesc
-            entrySlug={slugTitleValue}
-            entries={entries}
-          />
-          <SingleCardQuizES entrySlug={slugTitleValue} entries={entries} />
-        </div>
+        {addNote && <AddNote currentList={slugTitleValue} />}
+        {entryBySlug.length > 0 && (
+          <div className="flex gap-5">
+            <SingleCardQuizNote
+              entries={entries}
+              listSlug={slugTitleValue}
+              list={title}
+            />
+            <SingleCardQuiz entrySlug={slugTitleValue} entries={entries} />
+            <SingleCardQuizWithDesc
+              entrySlug={slugTitleValue}
+              entries={entries}
+            />
+            <SingleCardQuizES entrySlug={slugTitleValue} entries={entries} />
+          </div>
+        )}
+        {notesByList.length > 0 && (
+          <div className="grid grid-cols-12 gap-5 mt-8 w-full">
+            {notesByList.map((entry) => (
+              <div key={entry._id} className="col-span-4">
+                <SingleNote note={entry} />
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className="grid grid-cols-12 gap-5 mt-8 w-full">
-          {notesByList.map((entry) => (
-            <div key={entry._id} className="col-span-4">
-              <SingleNote note={entry} />
-            </div>
-          ))}
-        </div>
-
-        {entryBySlug.length === 0 && <LoaderCards />}
-        <div className="grid grid-cols-12 gap-5 mt-8 w-full">
-          {entryBySlug.map((entry) => (
-            <div key={entry._id} className="col-span-4">
-              <SingleCard entry={entry} />
-            </div>
-          ))}
-        </div>
+        {entryBySlug.length > 0 && (
+          <div className="grid grid-cols-12 gap-5 mt-8 w-full">
+            {entryBySlug.map((entry) => (
+              <div key={entry._id} className="col-span-4">
+                <SingleCard entry={entry} />
+              </div>
+            ))}
+          </div>
+        )}
       </ContainerDashBoard>
     </>
   );
