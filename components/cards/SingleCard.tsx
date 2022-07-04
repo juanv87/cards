@@ -61,13 +61,7 @@ const SingleCard = ({ entry }: Props) => {
     description: descValue !== "" ? descValue : description,
     phrase: phraseValue !== "" ? phraseValue : phrase,
     meaning: meaningValue !== "" ? meaningValue : meaning,
-    list:
-      listValue !== ""
-        ? listValue
-            .toLowerCase()
-            .replace(/ /g, "-")
-            .replace(/[^\w-]+/g, "")
-        : list,
+    list: listValue !== "" ? listValue : list,
   };
 
   const onUpdate = () => {
@@ -165,7 +159,7 @@ const SingleCard = ({ entry }: Props) => {
         </div>
         <p className="hidden">{status}</p>
         <div className="relative mt-5">
-          {!entryEdit && (
+          {/* {!entryEdit && (
             <>
               <Link href={`/dashboard/lists/${list}`}>
                 <a className="text-white">
@@ -176,16 +170,17 @@ const SingleCard = ({ entry }: Props) => {
                 </a>
               </Link>
             </>
-          )}
+          )} */}
           {entryEdit && (
             <select
               className="px-4 py-3 w-full"
               onChange={onListFieldChanges}
               name="lists"
               id="lists"
+              value={listValue || list}
             >
               {lists.map(({ _id, title, chosenEmoji }) => (
-                <option className="text-lg" selected key={_id} value={title}>
+                <option className="text-lg" key={_id} value={title}>
                   {chosenEmoji} {title}
                 </option>
               ))}

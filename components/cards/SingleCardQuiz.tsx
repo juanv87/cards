@@ -17,7 +17,7 @@ const SingleCardQuiz = ({ entries, entrySlug }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [reloadCard, setReloadCard] = useState(true);
   const entriesByList = useMemo(
-    () => entries.filter(({ list }) => list === entrySlug),
+    () => entries.filter(({ list }) => list === entrySlug || list),
     [entries]
   );
 

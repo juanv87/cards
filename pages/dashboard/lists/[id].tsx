@@ -31,7 +31,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
   const [addNote, setAddNote] = useState(false);
   const { entries } = useContext(EntriesContext);
   const entryBySlug = useMemo(
-    () => entries.filter(({ list }) => list === slugTitleValue),
+    () => entries.filter(({ list }) => list === title),
     [entries]
   );
 
@@ -94,7 +94,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
           <div className="grid grid-cols-12 gap-5 mt-8 w-full">
             {notesByList.map((entry) => (
               <div key={entry._id} className="col-span-4">
-                <SingleNote note={entry} />
+                <SingleNote note={entry} currentList={title} />
               </div>
             ))}
           </div>

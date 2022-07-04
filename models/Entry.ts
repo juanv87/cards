@@ -20,7 +20,7 @@ const entrySchema = new Schema({
   list: { type: String },
   fav: { type: Boolean },
   languaje: { type: String },
-  slugTitleValue: { type: String },
+  titleValue: { type: String },
   memoCount: { type: Number, default: 0 },
 });
 

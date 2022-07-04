@@ -12,8 +12,9 @@ import IconBtnSave from "../icons/IconBtnSave";
 import { NotesContext } from "../../context/notes";
 interface Props {
   note: Note;
+  currentList: string;
 }
-const SingleNote = ({ note }: Props) => {
+const SingleNote = ({ note, currentList }: Props) => {
   const [noteEdit, setNoteEdit] = useState(false);
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
@@ -116,7 +117,7 @@ const SingleNote = ({ note }: Props) => {
             id="lists"
           >
             {lists.map(({ _id, title, chosenEmoji }) => (
-              <option className="text-lg" selected key={_id} value={title}>
+              <option className="text-lg" key={_id} value={currentList}>
                 {chosenEmoji} {title}
               </option>
             ))}

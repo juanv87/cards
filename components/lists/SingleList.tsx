@@ -67,7 +67,7 @@ const SingleList = ({ list }: Props) => {
         )}
         {listEdit && (
           <>
-            <div className="fles items-center">
+            <div className="flex items-center">
               <select
                 value={emojiValue || chosenEmoji}
                 className="mr-2"
