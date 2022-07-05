@@ -11,13 +11,13 @@ import { Entry, List } from "../../interfaces";
 import { ContainerCard } from "../layouts/ContainerCard";
 interface Props {
   entries: Entry[];
-  entrySlug?: string;
+  listSlug?: string;
 }
-const SingleCardQuiz = ({ entries, entrySlug }: Props) => {
+const SingleCardQuiz = ({ entries, listSlug }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [reloadCard, setReloadCard] = useState(true);
   const entriesByList = useMemo(
-    () => entries.filter(({ list }) => list === entrySlug || list),
+    () => entries.filter(({ list }) => list === listSlug),
     [entries]
   );
 

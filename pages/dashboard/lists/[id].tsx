@@ -73,21 +73,18 @@ const SingleListPage = ({ list, notesByList }: Props) => {
             />
           )}
         </div>
-        {addCard && <AddCard currentList={slugTitleValue} />}
-        {addNote && <AddNote currentList={slugTitleValue} />}
+        {addCard && <AddCard currentList={title} />}
+        {addNote && <AddNote currentList={title} />}
         {entryBySlug.length > 0 && (
           <div className="flex gap-5">
             <SingleCardQuizNote
               entries={entries}
-              listSlug={slugTitleValue}
+              listSlug={title}
               list={title}
             />
-            <SingleCardQuiz entrySlug={slugTitleValue} entries={entries} />
-            <SingleCardQuizWithDesc
-              entrySlug={slugTitleValue}
-              entries={entries}
-            />
-            <SingleCardQuizES entrySlug={slugTitleValue} entries={entries} />
+            <SingleCardQuiz listSlug={title} entries={entries} />
+            <SingleCardQuizWithDesc listSlug={title} entries={entries} />
+            <SingleCardQuizES listSlug={title} entries={entries} />
           </div>
         )}
         {notesByList.length > 0 && (

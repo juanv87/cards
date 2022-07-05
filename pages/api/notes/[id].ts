@@ -61,6 +61,7 @@ const updateNote = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     description = noteToUpdate.description,
     title = noteToUpdate.title,
     content = noteToUpdate.content,
+    list = noteToUpdate.list,
   } = req.body;
 
   try {
@@ -70,6 +71,7 @@ const updateNote = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         description,
         title,
         content,
+        list,
       },
       { runValidators: true, new: true }
     );

@@ -21,16 +21,6 @@ const SingleNote = ({ note, currentList }: Props) => {
   const [contentValue, setContentValue] = useState("");
   const [listValue, setListValue] = useState("");
 
-  const { title, description, content } = note;
-  const { updateNote } = useContext(NotesContext);
-  const newNoteUpdate = {
-    ...note,
-    title: titleValue !== "" ? titleValue : title,
-    description: descriptionValue !== "" ? descriptionValue : description,
-    content: contentValue !== "" ? contentValue : content,
-    list: listValue !== "" ? listValue : note.list,
-  };
-
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
   };
@@ -44,6 +34,16 @@ const SingleNote = ({ note, currentList }: Props) => {
     setListValue(event.target.value);
   };
 
+  const { title, description, content, list } = note;
+  const { updateNote } = useContext(NotesContext);
+  const newNoteUpdate = {
+    ...note,
+    title: titleValue !== "" ? titleValue : title,
+    description: descriptionValue !== "" ? descriptionValue : description,
+    content: contentValue !== "" ? contentValue : content,
+    list: listValue || currentList,
+  };
+
   const onUpdate = () => {
     updateNote(newNoteUpdate);
     setNoteEdit(false);
@@ -52,6 +52,10 @@ const SingleNote = ({ note, currentList }: Props) => {
     setNoteEdit(true);
   };
   const { lists } = useContext(ListsContext);
+
+  {
+    console.log("listvalue", listValue);
+  }
   return (
     <>
       <ContainerCard>
@@ -99,7 +103,6 @@ const SingleNote = ({ note, currentList }: Props) => {
               height: 150,
               menubar: false,
               icons: "thin",
-              skin: "naked",
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen textcolor ",
@@ -114,10 +117,10 @@ const SingleNote = ({ note, currentList }: Props) => {
             className="px-4 py-3 w-full"
             onChange={onListFieldChanges}
             name="lists"
-            id="lists"
+            value={listValue || list}
           >
             {lists.map(({ _id, title, chosenEmoji }) => (
-              <option className="text-lg" key={_id} value={currentList}>
+              <option className="text-lg" key={_id} value={title}>
                 {chosenEmoji} {title}
               </option>
             ))}
