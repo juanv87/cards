@@ -3,6 +3,8 @@ import Head from "next/head";
 import { useAuth } from "../components/hooks/useAuth";
 import { Container } from "../components/layouts/Container";
 import { Header } from "../components/layouts/Header";
+import Login from "../components/user/Login";
+import Register from "../components/user/Register";
 const Home: NextPage = () => {
   const { user } = useAuth();
   console.log(user);
@@ -31,6 +33,12 @@ const Home: NextPage = () => {
             Se pueden guardar colecciones enteras o tarjetas particulares
             existentes en la app a alguna coleccion del usuario.{" "}
           </p>
+          <br />
+          <h2>Registrar usuario</h2>
+          <Register />
+          <hr />
+          <h2>Login</h2>
+          <Login />
         </main>
       </Container>
     </div>

@@ -7,9 +7,13 @@ import AddList from "../../components/lists/AddList";
 import ListsList from "../../components/lists/ListsList";
 import { EntriesContext } from "../../context/entries";
 import { UIContext } from "../../context/ui";
+import { GetServerSideProps } from "next";
+import { auth } from "../../lib/firebase/firebase";
+import { authContext } from "../../context/authContext";
+import { useAuth } from "../../components/hooks/useAuth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const DashBoard = () => {
-
   return (
     <>
       <Header />

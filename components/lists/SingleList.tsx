@@ -67,10 +67,10 @@ const SingleList = ({ list }: Props) => {
         )}
         {listEdit && (
           <>
-            <div className="flex items-center">
+            <div className="flex mb-3">
               <select
                 value={emojiValue || chosenEmoji}
-                className="mr-2"
+                className="mr-2 pr-2 rounded-lg hover:bg-gray-300 bg-gray-200 border border-gray-200 focus:outline-none focus:border-gray-400 focus:bg-white"
                 onChange={onEmojiClick}
                 name="lists"
                 id=""
@@ -85,7 +85,7 @@ const SingleList = ({ list }: Props) => {
                 value={titleValue || title}
                 type="text"
                 onChange={onTitleFieldChanges}
-                className="py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
+                className="flex-1 py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
               />
             </div>
           </>
@@ -106,7 +106,6 @@ const SingleList = ({ list }: Props) => {
               height: 150,
               menubar: false,
               icons: "thin",
-              skin: "naked",
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen textcolor ",
