@@ -23,8 +23,6 @@ interface Props {
 }
 
 const SingleListPage = ({ list, notesByList }: Props) => {
-  console.log("notesByList", notesByList);
-
   // todo: traer listas filtradas por el id
   const { title, slugTitleValue, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
@@ -133,7 +131,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 
   const notesByList = await dbNotes.getNotesByList(list?.title);
-  console.log("notesByList", notesByList);
 
   return {
     props: {

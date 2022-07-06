@@ -43,7 +43,7 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
                 lists.map(({ title, _id, slugTitleValue, chosenEmoji }) => (
                   <li key={_id}>
                     <div className="flex items-center gap-1">
-                      <a href={`/dashboard/lists/${_id}`}>
+                      <a className="flex" href={`/dashboard/lists/${_id}`}>
                         {chosenEmoji ? (
                           <span className={showMenu ? "text-base" : "text-xl"}>
                             {chosenEmoji}
@@ -83,7 +83,7 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
                 notes.map(({ title, _id }) => (
                   <li key={_id}>
                     <div className="flex items-center gap-1">
-                      <IconNote size={showMenu ? "25" : "30"} />
+                      <div className="weight-bold">-</div>
                       <a href={`/dashboard/notes/${_id}`}>
                         <span
                           className={`text-base ml-2 ${!showMenu && "hidden"} `}

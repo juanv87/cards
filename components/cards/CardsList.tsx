@@ -1,35 +1,27 @@
-import React, { FC, useContext, useMemo } from "react";
+import React, { FC, useContext, useMemo, useState, useEffect } from "react";
 import { EntryStatus } from "../../interfaces";
 import SingleCard from "./SingleCard";
 import { EntriesContext } from "../../context/entries/EntriesContext";
 import SingleCardQuiz from "./SingleCardQuiz";
 import SingleCardQuizOptions from "./SingleCardQuizOptions";
+import FilterByEntries from "../FilterByEntries";
 
-interface Props {
-  status: EntryStatus;
-}
+const CardsList: FC = () => {
+  // const entriesByStatus = useMemo(
+  //   () => entries.filter((entry) => entry.status === status),
+  //   [entries]
+  // );
+  // const randomEntry = entries[Math.floor(Math.random() * entries.length)];
 
-const CardsList: FC<Props> = ({ status }) => {
   const { entries } = useContext(EntriesContext);
-  const entriesByStatus = useMemo(
-    () => entries.filter((entry) => entry.status === status),
-    [entries]
-  );
-  const randomEntry = entries[Math.floor(Math.random() * entries.length)];
 
   return (
     <>
       <div className="flex gap-5">
-        <SingleCardQuiz entries={entries} />
+        {/* <SingleCardQuiz entries={entries} /> */}
         {/* <SingleCardQuizOptions entries={entries} entry={randomEntry} /> */}
       </div>
-      <div className="grid grid-cols-12 gap-5 w-full">
-        {entriesByStatus.map((entry) => (
-          <div key={entry._id} className="col-span-4 mt-8">
-            <SingleCard entry={entry} />
-          </div>
-        ))}
-      </div>
+      <FilterByEntries entries={entries} />
     </>
   );
 };
