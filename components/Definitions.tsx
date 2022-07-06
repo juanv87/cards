@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getWords } from "../services/words";
+import { useGetDefinitionsByWord } from "./hooks/useGetDefinitionsByWord";
 
 const Definitions = ({ selectWord }: any) => {
-  const [words, setWords] = useState([]);
-  useEffect(() => {
-    getWords(selectWord).then((data) => {
-      setWords(data);
-    });
-  }, []);
+  const wordDefinition = useGetDefinitionsByWord(selectWord);
+
   return (
     <>
       <ul className="mt-5 text-sm">
-        {words.length > 0 &&
-          words.map(({ word, meanings }) => (
+        {wordDefinition.length > 0 &&
+          wordDefinition.map(({ word, meanings }) => (
             <li key={word}>
               <ul>
                 <li>

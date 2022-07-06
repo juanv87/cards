@@ -1,20 +1,12 @@
-import Link from "next/link";
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
-import { EntriesContext } from "../../context/entries";
+import React, { useMemo, useState, useEffect } from "react";
 import { Entry } from "../../interfaces";
+import { useGetDefinitionsByWord } from "../hooks/useGetDefinitionsByWord";
 import { ContainerCard } from "../layouts/ContainerCard";
 interface Props {
   entries: Entry[];
   listSlug: string;
 }
 const SingleCardQuizWithDesc = ({ entries, listSlug }: Props) => {
-  const [showAnswer, setShowAnswer] = useState(false);
   const entryBySlug = useMemo(
     () => entries.filter(({ list }) => list === listSlug),
     [entries]
