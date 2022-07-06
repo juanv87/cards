@@ -9,11 +9,13 @@ import React, {
 import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
+import Definitions from "../Definitions";
 import IconBtnSave from "../icons/IconBtnSave";
 import IconEdit from "../icons/IconEdit";
 import IconTag from "../icons/IconTag";
 import { ContainerBtnCancel } from "../layouts/ContainerBtnCancel";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
+import { ContainerBtnViewMore } from "../layouts/ContainerBtnViewMore";
 import { ContainerCard } from "../layouts/ContainerCard";
 
 interface Props {
@@ -26,6 +28,7 @@ const SingleCard = ({ entry }: Props) => {
   const [phraseValue, setPhraseValue] = useState("");
   const [meaningValue, setMeaningValue] = useState("");
   const [listValue, setListValue] = useState("");
+  const [viewDefinitions, setViewDefinitions] = useState(false);
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -196,6 +199,20 @@ const SingleCard = ({ entry }: Props) => {
           >
             <IconEdit />
           </button>
+        )}
+        {!entryEdit && (
+          <>
+            <ContainerBtnViewMore>
+              <div className="flex justify-center">
+                <button onClick={() => setViewDefinitions(!viewDefinitions)}>
+                  View more definitions
+                </button>
+              </div>
+            </ContainerBtnViewMore>
+            {viewDefinitions && (
+              <Definitions selectWord={titleValue || title} />
+            )}
+          </>
         )}
         {entryEdit && (
           <>

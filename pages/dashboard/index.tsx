@@ -32,9 +32,13 @@ const DashBoard = () => {
                       <li>
                         {meanings.map(({ definitions }) => {
                           return definitions.map(({ definition, example }) => (
-                            <div key={definition} className="definition">
-                              <p>{definition}</p>
-                              <p>{example}</p>
+                            <div key={definition} className="definition mb-5">
+                              <p>
+                                <strong>Definition:</strong> {definition}
+                              </p>
+                              <p>
+                                <strong>Example:</strong> {example}
+                              </p>
                             </div>
                           ));
                         })}
