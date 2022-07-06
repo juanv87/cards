@@ -1,12 +1,6 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
-import AddCard from "../../components/cards/AddCard";
-import CardsList from "../../components/cards/CardsList";
+import React, { ChangeEvent, useState } from "react";
 import { ContainerDashBoard } from "../../components/layouts/ContainerDashBoard";
 import { Header } from "../../components/layouts/Header";
-import AddList from "../../components/lists/AddList";
-import ListsList from "../../components/lists/ListsList";
-import { EntriesContext } from "../../context/entries";
-import { UIContext } from "../../context/ui";
 import { getWords } from "../../services/words";
 
 const DashBoard = () => {
@@ -31,10 +25,21 @@ const DashBoard = () => {
             <input type="text" onChange={onMeaningFieldChanges} />
             <button onClick={onSendWord}>Select</button>
             <ul>
-              {words &&
-                words.map((item) => (
-                  <li key={item.word}>
-                    {item.meanings[0].definitions[0].definition} <br />
+              {words.length > 0 &&
+                words.map(({ word, meanings }) => (
+                  <li key={word}>
+                    <ul>
+                      <li>
+                        {meanings.map(({ definitions }) => {
+                          return definitions.map(({ definition, example }) => (
+                            <div key={definition} className="definition">
+                              <p>{definition}</p>
+                              <p>{example}</p>
+                            </div>
+                          ));
+                        })}
+                      </li>
+                    </ul>
                   </li>
                 ))}
             </ul>

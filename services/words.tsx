@@ -1,5 +1,7 @@
 export async function getWords(selectWord = "all") {
   return await fetch(
     `https://api.dictionaryapi.dev/api/v2/entries/en/${selectWord}`
-  ).then((data) => data.json());
+  )
+    .then((data) => data.json())
+    .catch((error) => console.log(error));
 }
