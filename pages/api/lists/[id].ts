@@ -63,6 +63,7 @@ const updateList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     status = listToUpdate.status,
     slugTitleValue = listToUpdate.slugTitleValue,
     chosenEmoji = listToUpdate.chosenEmoji,
+    pinned = listToUpdate.pinned,
   } = req.body;
 
   try {
@@ -74,6 +75,7 @@ const updateList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         slugTitleValue,
         status,
         chosenEmoji,
+        pinned,
       },
       { runValidators: true, new: true }
     );

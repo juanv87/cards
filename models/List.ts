@@ -12,6 +12,7 @@ const listSchema = new Schema({
   },
   slugTitleValue: { type: String },
   chosenEmoji: { type: String },
+  pinned: { type: Boolean },
 });
 
 const ListModel: Model<IList> =

@@ -8,7 +8,8 @@ interface ContextProps {
     description: string,
     status: string,
     slugTitleValue: string,
-    chosenEmoji: string
+    chosenEmoji: string,
+    pinned: boolean
   ) => void;
   updateList: (list: List) => void;
 }

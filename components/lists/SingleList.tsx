@@ -18,8 +18,9 @@ const SingleList = ({ list }: Props) => {
   const [newSlugTitleValue, setNewSlugTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
   const [emojiValue, setEmojiValue] = useState("");
+  const [pinnedValue, setPinnedValue] = useState(Boolean(list.pinned));
 
-  const { title, description, slugTitleValue, chosenEmoji } = list;
+  const { title, description, slugTitleValue, chosenEmoji, pinned } = list;
   const { updateList } = useContext(ListsContext);
   const newListUpdate = {
     ...list,
@@ -33,6 +34,7 @@ const SingleList = ({ list }: Props) => {
         : slugTitleValue,
     description: descriptionValue !== "" ? descriptionValue : description,
     chosenEmoji: emojiValue !== "" ? emojiValue : chosenEmoji,
+    pinned: pinnedValue,
   };
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +47,9 @@ const SingleList = ({ list }: Props) => {
   const onEmojiClick = (event: ChangeEvent<HTMLSelectElement>) => {
     setEmojiValue(event.target.value);
   };
+  const onPinnedClick = () => {
+    setPinnedValue(!pinnedValue);
+  };
 
   const onUpdate = () => {
     updateList(newListUpdate);
@@ -53,6 +58,7 @@ const SingleList = ({ list }: Props) => {
   const onListEdit = () => {
     setListEdit(true);
   };
+
   return (
     <>
       <ContainerCard>
@@ -65,6 +71,21 @@ const SingleList = ({ list }: Props) => {
             </Link>
           </h3>
         )}
+        {!listEdit && pinned === true && (
+          <>
+            <div className="absolute -right-2 -top-3 z-50 text-lg">📌</div>
+          </>
+        )}
+        {listEdit &&
+          (pinned === true ? (
+            <button id="buttonPin" onClick={onPinnedClick}>
+              📌
+            </button>
+          ) : (
+            <button id="buttonPin" onClick={onPinnedClick}>
+              📍
+            </button>
+          ))}
         {listEdit && (
           <>
             <div className="flex items-center">
@@ -92,7 +113,7 @@ const SingleList = ({ list }: Props) => {
         )}
         {!listEdit && (
           <div
-            className="boxPreview max-h-40 text-base pb-5 text-gray-800 max-w-full pr-5"
+            className="boxPreview max-h-40 text-base pb-5 text-gray-800 max-w-full pr-5 overflow-auto"
             dangerouslySetInnerHTML={{
               __html: descriptionValue || description || "",
             }}
@@ -103,10 +124,9 @@ const SingleList = ({ list }: Props) => {
             apiKey="urxgaopom4tpzlamq09oxy8hyu0hxifvc57jc0esxnsnbm0y"
             value={descriptionValue || description}
             init={{
-              height: 150,
+              height: 180,
               menubar: false,
               icons: "thin",
-              skin: "naked",
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen textcolor ",
@@ -147,14 +167,6 @@ const SingleList = ({ list }: Props) => {
           </>
         )}
       </ContainerCard>
-      <style jsx>{`
-        .boxPreview ul {
-          display: none !important;
-        }
-        .boxPreview ul li {
-          list-style-type: circle;
-        }
-      `}</style>
     </>
   );
 };

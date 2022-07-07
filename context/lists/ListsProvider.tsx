@@ -1,11 +1,6 @@
-import { FC, useEffect, useReducer } from "react";
-
-import { v4 as uuidv4 } from "uuid";
-
-import { Entry, ListStatus, List } from "../../interfaces";
-
+import { useEffect, useReducer } from "react";
+import { List } from "../../interfaces";
 import { listsApi } from "../../api";
-
 import { ListsContext, listsReducer } from "./";
 
 export interface ListsState {
@@ -23,7 +18,8 @@ export const ListsProvider = ({ children }: any) => {
     description: string,
     status: string,
     slugTitleValue: string,
-    chosenEmoji: string
+    chosenEmoji: string,
+    pinned: boolean
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
     const { data } = await listsApi.post<List>("/lists", {
@@ -32,6 +28,7 @@ export const ListsProvider = ({ children }: any) => {
       status,
       slugTitleValue,
       chosenEmoji,
+      pinned,
     });
     dispatch({ type: "[List] Add-List", payload: data });
   };
@@ -43,6 +40,7 @@ export const ListsProvider = ({ children }: any) => {
     status,
     slugTitleValue,
     chosenEmoji,
+    pinned,
   }: List) => {
     try {
       const { data } = await listsApi.put<List>(`/lists/${_id}`, {
@@ -52,6 +50,7 @@ export const ListsProvider = ({ children }: any) => {
         status,
         slugTitleValue,
         chosenEmoji,
+        pinned,
       });
       dispatch({ type: "[List] List-Updated", payload: data });
     } catch (error) {

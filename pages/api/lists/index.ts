@@ -40,6 +40,7 @@ const postList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     status = "finished",
     slugTitleValue,
     chosenEmoji,
+    pinned = false,
   } = req.body;
 
   const newList = new List({
@@ -49,6 +50,7 @@ const postList = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     status,
     slugTitleValue,
     chosenEmoji,
+    pinned,
   });
 
   try {

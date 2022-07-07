@@ -12,6 +12,7 @@ const AddList = () => {
   const [touched, setTouched] = useState(false);
   const [statusValue, setStatusValue] = useState("publish");
   const [chosenEmoji, setChosenEmoji] = useState("");
+  const [pinnedValue, setPinnedValue] = useState(false);
 
   const onEmojiClick = (event: ChangeEvent<HTMLSelectElement>) => {
     setChosenEmoji(event.target.value);
@@ -26,6 +27,7 @@ const AddList = () => {
   };
   const onSave = () => {
     if (titleValue.length === 0) return;
+    setPinnedValue(false);
     addNewList(
       titleValue,
       descValue,
@@ -34,7 +36,8 @@ const AddList = () => {
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[^\w-]+/g, ""),
-      chosenEmoji
+      chosenEmoji,
+      pinnedValue
     );
     setTouched(false);
     settitleValue("");

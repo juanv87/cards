@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Entry } from "../interfaces";
 import SingleCard from "./cards/SingleCard";
 
-const FilterByEntries = ({ entries }: Entry[]) => {
+interface Props {
+  entries: Entry[];
+}
+
+const FilterByEntries = ({ entries }: Props) => {
   const [entriesFiltered, setEntriesFiltered] = useState(entries);
   const handleEntriesFiltered = () => {
     const entriesFilter = (

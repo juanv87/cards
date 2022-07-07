@@ -6,6 +6,7 @@ export interface List {
   status: ListStatus;
   slugTitleValue: string;
   chosenEmoji?: string;
+  pinned: boolean;
 }
 
 export type ListStatus = "pending" | "in-progress" | "finished" | "publish";

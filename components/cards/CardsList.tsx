@@ -7,12 +7,6 @@ import SingleCardQuizOptions from "./SingleCardQuizOptions";
 import FilterByEntries from "../FilterByEntries";
 
 const CardsList: FC = () => {
-  // const entriesByStatus = useMemo(
-  //   () => entries.filter((entry) => entry.status === status),
-  //   [entries]
-  // );
-  // const randomEntry = entries[Math.floor(Math.random() * entries.length)];
-
   const { entries } = useContext(EntriesContext);
 
   return (

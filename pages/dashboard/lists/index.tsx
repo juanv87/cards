@@ -1,14 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import IconAddCard from "../../../components/icons/IconAddCard";
-import IconClose from "../../../components/icons/IconClose";
 import { ContainerDashBoard } from "../../../components/layouts/ContainerDashBoard";
 import { Header } from "../../../components/layouts/Header";
 import AddList from "../../../components/lists/AddList";
 import ListsList from "../../../components/lists/ListsList";
-import { UIContext } from "../../../context/ui";
 
 const Lists = () => {
-  const { isAddingEntry, setIsAddingEntry } = useContext(UIContext);
   const [addList, setAddList] = useState(false);
   return (
     <>

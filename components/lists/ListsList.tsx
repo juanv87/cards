@@ -16,11 +16,13 @@ const ListsList: FC<Props> = ({ status }) => {
   return (
     <>
       <div className="grid grid-cols-12 gap-5 w-full">
-        {lists.map((lists) => (
-          <div key={lists._id} className="col-span-3 mt-8">
-            <SingleList list={lists} />
-          </div>
-        ))}
+        {lists
+          .sort((a, b) => (a.pinned < b.pinned ? 1 : -1))
+          .map((lists) => (
+            <div key={lists._id} className="col-span-3 mt-8">
+              <SingleList list={lists} />
+            </div>
+          ))}
       </div>
     </>
   );

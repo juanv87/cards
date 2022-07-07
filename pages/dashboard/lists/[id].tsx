@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetServerSideProps } from "next";
+import { GetServerSideProps } from "next";
 import React, { useContext, useMemo, useState } from "react";
 import { ContainerDashBoard } from "../../../components/layouts/ContainerDashBoard";
 import { Header } from "../../../components/layouts/Header";
@@ -11,7 +11,6 @@ import SingleCardQuizWithDesc from "../../../components/cards/SingleCardQuizWith
 import SingleCardQuizES from "../../../components/cards/SingleCardQuizES";
 import { dbLists, dbNotes } from "../../../database";
 import { List, Note } from "../../../interfaces";
-import LoaderCards from "../../../components/loaders/LoaderCards";
 import SingleCardQuizNote from "../../../components/cards/SingleCardQuizNote";
 import SingleNote from "../../../components/notes/SingleNote";
 import AddNote from "../../../components/notes/AddNote";
