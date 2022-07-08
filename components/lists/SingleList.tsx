@@ -13,18 +13,19 @@ interface Props {
   list: List;
 }
 const SingleList = ({ list }: Props) => {
+  const { title, description, slugTitleValue, chosenEmoji, pinned } = list;
+
   const [listEdit, setListEdit] = useState(false);
-  const [titleValue, setTitleValue] = useState("");
+  const [titleValue, setTitleValue] = useState(title);
   const [newSlugTitleValue, setNewSlugTitleValue] = useState("");
-  const [descriptionValue, setDescriptionValue] = useState("");
+  const [descriptionValue, setDescriptionValue] = useState(description);
   const [emojiValue, setEmojiValue] = useState("");
   const [pinnedValue, setPinnedValue] = useState(Boolean(list.pinned));
 
-  const { title, description, slugTitleValue, chosenEmoji, pinned } = list;
   const { updateList } = useContext(ListsContext);
   const newListUpdate = {
     ...list,
-    title: titleValue !== "" ? titleValue : title,
+    title: titleValue,
     slugTitleValue:
       newSlugTitleValue !== ""
         ? newSlugTitleValue
@@ -32,7 +33,7 @@ const SingleList = ({ list }: Props) => {
             .replace(/ /g, "-")
             .replace(/[^\w-]+/g, "")
         : slugTitleValue,
-    description: descriptionValue !== "" ? descriptionValue : description,
+    description: descriptionValue,
     chosenEmoji: emojiValue !== "" ? emojiValue : chosenEmoji,
     pinned: pinnedValue,
   };
@@ -76,19 +77,10 @@ const SingleList = ({ list }: Props) => {
             <div className="absolute -right-2 -top-3 z-50 text-lg">📌</div>
           </>
         )}
-        {listEdit &&
-          (pinned === true ? (
-            <button id="buttonPin" onClick={onPinnedClick}>
-              📌
-            </button>
-          ) : (
-            <button id="buttonPin" onClick={onPinnedClick}>
-              📍
-            </button>
-          ))}
+
         {listEdit && (
           <>
-            <div className="flex items-center">
+            <div className="flex items-center justify-between mb-3">
               <select
                 value={emojiValue || chosenEmoji}
                 className="mr-2"
@@ -103,11 +95,21 @@ const SingleList = ({ list }: Props) => {
                 ))}
               </select>
               <input
-                value={titleValue || title}
+                value={titleValue}
                 type="text"
                 onChange={onTitleFieldChanges}
-                className="py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none mb-3"
+                className="flex-1 mr-2 py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
               />
+              {listEdit &&
+                (pinnedValue ? (
+                  <button className="text-xl" onClick={onPinnedClick}>
+                    📌
+                  </button>
+                ) : (
+                  <button className="text-xl" onClick={onPinnedClick}>
+                    📍
+                  </button>
+                ))}
             </div>
           </>
         )}
@@ -122,7 +124,7 @@ const SingleList = ({ list }: Props) => {
         {listEdit && (
           <Editor
             apiKey="urxgaopom4tpzlamq09oxy8hyu0hxifvc57jc0esxnsnbm0y"
-            value={descriptionValue || description}
+            value={descriptionValue}
             init={{
               height: 180,
               menubar: false,
