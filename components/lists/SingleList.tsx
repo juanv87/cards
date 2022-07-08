@@ -80,10 +80,10 @@ const SingleList = ({ list }: Props) => {
 
         {listEdit && (
           <>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex mb-3">
               <select
                 value={emojiValue || chosenEmoji}
-                className="mr-2"
+                className="mr-2 pr-2 rounded-lg hover:bg-gray-300 bg-gray-200 border border-gray-200 focus:outline-none focus:border-gray-400 focus:bg-white"
                 onChange={onEmojiClick}
                 name="lists"
                 id=""
@@ -98,7 +98,7 @@ const SingleList = ({ list }: Props) => {
                 value={titleValue}
                 type="text"
                 onChange={onTitleFieldChanges}
-                className="flex-1 mr-2 py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
+                className="flex-1 py-2 px-1 pl-2 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
               />
               {listEdit &&
                 (pinnedValue ? (
