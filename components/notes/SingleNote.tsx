@@ -10,6 +10,7 @@ import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import { ContainerBtnCancel } from "../layouts/ContainerBtnCancel";
 import IconBtnSave from "../icons/IconBtnSave";
 import { NotesContext } from "../../context/notes";
+import IconNote from "../icons/IconNote";
 interface Props {
   note: Note;
   currentList: string;
@@ -60,7 +61,8 @@ const SingleNote = ({ note, currentList }: Props) => {
     <>
       <ContainerCard>
         {!noteEdit && (
-          <h3 className="text-2xl flex gap-1 mb-2">
+          <h3 className="text-2xl flex gap-1 mb-2 items-center">
+            <IconNote size="30" />
             <Link href={`/dashboard/notes/${note._id}`}>
               <a>{titleValue || title}</a>
             </Link>

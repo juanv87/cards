@@ -21,6 +21,7 @@
     "react-firebase-hooks": "^3.0.4",
     "react-firebaseui": "^5.0.2",
     "react-speech-kit": "^3.0.1",
+    "unsplash-js": "^7.0.15",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

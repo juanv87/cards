@@ -3,16 +3,6 @@ import { ContainerDashBoard } from "../../components/layouts/ContainerDashBoard"
 import { Header } from "../../components/layouts/Header";
 import { getWords } from "../../services/words";
 
-import AddList from "../../components/lists/AddList";
-import ListsList from "../../components/lists/ListsList";
-import { EntriesContext } from "../../context/entries";
-import { UIContext } from "../../context/ui";
-import { GetServerSideProps } from "next";
-import { auth } from "../../lib/firebase/firebase";
-import { authContext } from "../../context/authContext";
-import { useAuth } from "../../components/hooks/useAuth";
-import { onAuthStateChanged } from "firebase/auth";
-
 const DashBoard = () => {
   const [words, setWords] = useState([]);
   const [selectWord, setSelectWord] = useState("");
@@ -36,21 +26,23 @@ const DashBoard = () => {
             <button onClick={onSendWord}>Select</button>
             <ul>
               {words.length > 0 &&
-                words.map(({ word, meanings }) => (
+                words.map(({ word, meanings }: any) => (
                   <li key={word}>
                     <ul>
                       <li>
-                        {meanings.map(({ definitions }) => {
-                          return definitions.map(({ definition, example }) => (
-                            <div key={definition} className="definition mb-5">
-                              <p>
-                                <strong>Definition:</strong> {definition}
-                              </p>
-                              <p>
-                                <strong>Example:</strong> {example}
-                              </p>
-                            </div>
-                          ));
+                        {meanings.map(({ definitions }: any) => {
+                          return definitions.map(
+                            ({ definition, example }: any) => (
+                              <div key={definition} className="definition mb-5">
+                                <p>
+                                  <strong>Definition:</strong> {definition}
+                                </p>
+                                <p>
+                                  <strong>Example:</strong> {example}
+                                </p>
+                              </div>
+                            )
+                          );
                         })}
                       </li>
                     </ul>

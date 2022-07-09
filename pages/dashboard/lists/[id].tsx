@@ -74,11 +74,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
         {addNote && <AddNote currentList={title} />}
         {entryBySlug.length > 0 && (
           <div className="flex gap-5">
-            <SingleCardQuizNote
-              entries={entries}
-              listSlug={title}
-              list={title}
-            />
+            <SingleCardQuizNote listSlug={title} list={title} />
             <SingleCardQuiz listSlug={title} entries={entries} />
             <SingleCardQuizWithDesc listSlug={title} entries={entries} />
             <SingleCardQuizES listSlug={title} entries={entries} />
@@ -96,11 +92,13 @@ const SingleListPage = ({ list, notesByList }: Props) => {
 
         {entryBySlug.length > 0 && (
           <div className="grid grid-cols-12 gap-5 mt-8 w-full">
-            {entryBySlug.map((entry) => (
-              <div key={entry._id} className="col-span-4">
-                <SingleCard entry={entry} />
-              </div>
-            ))}
+            {entryBySlug
+              .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
+              .map((entry) => (
+                <div key={entry._id} className="col-span-4">
+                  <SingleCard entry={entry} />
+                </div>
+              ))}
           </div>
         )}
       </ContainerDashBoard>
@@ -111,8 +109,6 @@ const SingleListPage = ({ list, notesByList }: Props) => {
 export default SingleListPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  console.log("params", params);
-
   const { id } = params as {
     id: string;
   };

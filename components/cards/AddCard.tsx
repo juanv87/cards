@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
   useContext,
+  useEffect,
   useLayoutEffect,
   useState,
 } from "react";
@@ -10,10 +11,12 @@ import { Editor } from "@tinymce/tinymce-react";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
 import IconSearch from "../icons/IconSearch";
-interface Props {
-  currentList?: string;
-}
 
+import PhotoExample from "../StockPhotos/PhotoExample";
+import ListPhotos from "../StockPhotos/ListPhotos";
+interface Props {
+  currentList: string;
+}
 const AddCard = ({ currentList }: Props) => {
   const { addNewEntry } = useContext(EntriesContext);
   const [titleValue, settitleValue] = useState("");
@@ -25,6 +28,9 @@ const AddCard = ({ currentList }: Props) => {
   const [favValue, setFavValue] = useState(false);
   const [statusValue, setStatusValue] = useState("publish");
   const [searchIframe, setSearchIframe] = useState(false);
+
+  const [searchTitle, setSearchTitle] = useState("");
+  const [titleSearch, setTitleSearch] = useState("");
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -72,8 +78,9 @@ const AddCard = ({ currentList }: Props) => {
     setLanguajeValue("");
   };
   const onSearchWord = () => {
-    settitleValue(titleValue);
-    setSearchIframe(!searchIframe);
+    // const titleSearch1 = (document.querySelector("#title") as HTMLInputElement)
+    //   .value;
+    setTitleSearch(titleValue);
   };
 
   return (
@@ -83,17 +90,18 @@ const AddCard = ({ currentList }: Props) => {
           <div className="flex gap-3 items-center">
             <input
               value={titleValue}
+              id="title"
               type="text"
               placeholder="Title"
               onChange={onTitleFieldChanges}
               className="py-3 px-2 border-none w-full"
             />
-            {/* <button
+            <button
               className="text-sm rounded-md bg-slate-600 hover:bg-slate-700 text-white uppercase p-1 cursor-default"
               onClick={onSearchWord}
             >
               <IconSearch color="white" size="35" />
-            </button> */}
+            </button>
           </div>
           <input
             value={meaningValue}
@@ -142,6 +150,7 @@ const AddCard = ({ currentList }: Props) => {
               ))}
             </select>
           )}
+          <ListPhotos titleValue={titleSearch} />
           <div className="flex justify-end">
             <ContainerBtnSave>
               <button

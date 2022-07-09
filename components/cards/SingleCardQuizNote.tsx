@@ -14,17 +14,18 @@ import IconBtnSave from "../icons/IconBtnSave";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import { ContainerCard } from "../layouts/ContainerCard";
 interface Props {
-  entries: Entry[];
   listSlug?: string;
   list: string;
 }
-const SingleCardQuizNote = ({ entries, listSlug, list }: Props) => {
+const SingleCardQuizNote = ({ listSlug, list }: Props) => {
   console.log(list);
 
   const [titleValue, settitleValue] = useState("Nueva Quiz");
   const [descValue, setDescValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [listValue, setListValue] = useState(listSlug || "");
+
+  const { entries } = useContext(EntriesContext);
 
   const entriesByList = useMemo(
     () => entries.filter(({ list }) => list === listSlug),

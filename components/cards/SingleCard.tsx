@@ -56,6 +56,7 @@ const SingleCard = ({ entry }: Props) => {
     fav,
     languaje,
     _id,
+    memoCount,
   } = entry;
   const { updateEntry } = useContext(EntriesContext);
   const newEntryUpdate = {
@@ -200,6 +201,7 @@ const SingleCard = ({ entry }: Props) => {
             <IconEdit />
           </button>
         )}
+        {memoCount}
         {!entryEdit && (
           <>
             <ContainerBtnViewMore>
