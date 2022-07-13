@@ -29,6 +29,7 @@ const SingleCard = ({ entry }: Props) => {
   const [meaningValue, setMeaningValue] = useState("");
   const [listValue, setListValue] = useState("");
   const [viewDefinitions, setViewDefinitions] = useState(false);
+  const [imagenValue, setImagenValue] = useState("");
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -45,6 +46,9 @@ const SingleCard = ({ entry }: Props) => {
   const onListFieldChanges = (event: ChangeEvent<HTMLSelectElement>) => {
     setListValue(event.target.value);
   };
+  const onImagenFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
+    setImagenValue(event.target.value);
+  };
 
   const {
     title,
@@ -57,6 +61,7 @@ const SingleCard = ({ entry }: Props) => {
     languaje,
     _id,
     memoCount,
+    imagen,
   } = entry;
   const { updateEntry } = useContext(EntriesContext);
   const newEntryUpdate = {
@@ -66,6 +71,7 @@ const SingleCard = ({ entry }: Props) => {
     phrase: phraseValue !== "" ? phraseValue : phrase,
     meaning: meaningValue !== "" ? meaningValue : meaning,
     list: listValue !== "" ? listValue : list,
+    imagen: imagenValue || "",
   };
 
   const onUpdate = () => {
@@ -119,14 +125,25 @@ const SingleCard = ({ entry }: Props) => {
             </p>
           )}
           {entryEdit && (
-            <div className="mb-2">
-              <input
-                value={descValue || description}
-                type="text"
-                onChange={onDescFieldChanges}
-                className="w-full py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
-              />
-            </div>
+            <>
+              <div className="mb-2">
+                <input
+                  value={descValue || description}
+                  type="text"
+                  onChange={onDescFieldChanges}
+                  className="w-full py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
+                />
+              </div>
+              <div className="mb-2">
+                <input
+                  placeholder={imagenValue || imagen || "Imagen"}
+                  value={imagenValue || imagen}
+                  type="text"
+                  onChange={onImagenFieldChanges}
+                  className="w-full mt-2 py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
+                />
+              </div>
+            </>
           )}
         </div>
         {!entryEdit && <hr className="my-2 border-gray-400" />}
@@ -202,6 +219,10 @@ const SingleCard = ({ entry }: Props) => {
           </button>
         )}
         {memoCount}
+        {(imagen && (
+          <img src={imagen} className="w-full h-auto" alt="imagen" />
+        )) ||
+          (imagenValue && <img src={imagenValue} width="400" alt="" />)}
         {!entryEdit && (
           <>
             <ContainerBtnViewMore>

@@ -14,6 +14,7 @@ import IconSearch from "../icons/IconSearch";
 
 import PhotoExample from "../StockPhotos/PhotoExample";
 import ListPhotos from "../StockPhotos/ListPhotos";
+import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
 interface Props {
   currentList: string;
 }
@@ -27,9 +28,8 @@ const AddCard = ({ currentList }: Props) => {
   const [languajeValue, setLanguajeValue] = useState("");
   const [favValue, setFavValue] = useState(false);
   const [statusValue, setStatusValue] = useState("publish");
-  const [searchIframe, setSearchIframe] = useState(false);
+  const [imagenValue, setImagenValue] = useState("");
 
-  const [searchTitle, setSearchTitle] = useState("");
   const [titleSearch, setTitleSearch] = useState("");
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +47,16 @@ const AddCard = ({ currentList }: Props) => {
   const onListFieldChanges = (event: ChangeEvent<HTMLSelectElement>) => {
     setListValue(event.target.value);
   };
+  const onImagenFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
+    setImagenValue(event.target.value);
+  };
 
   const { lists } = useContext(ListsContext);
+  const image = useGetImageByTitleValue(titleValue);
 
   const onSave = () => {
+    console.log("onSave", image);
+
     if (titleValue.length === 0) return;
     addNewEntry(
       titleValue,
@@ -68,7 +74,10 @@ const AddCard = ({ currentList }: Props) => {
       titleValue
         .toLowerCase()
         .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, "")
+        .replace(/[^\w-]+/g, ""),
+
+      imagenValue,
+      0
     );
     settitleValue("");
     setMeaningValue("");
@@ -76,10 +85,9 @@ const AddCard = ({ currentList }: Props) => {
     setDescValue("");
     setListValue("");
     setLanguajeValue("");
+    setImagenValue("");
   };
   const onSearchWord = () => {
-    // const titleSearch1 = (document.querySelector("#title") as HTMLInputElement)
-    //   .value;
     setTitleSearch(titleValue);
   };
 
@@ -150,7 +158,15 @@ const AddCard = ({ currentList }: Props) => {
               ))}
             </select>
           )}
+          <input
+            value={imagenValue}
+            type="text"
+            placeholder="Image"
+            onChange={onImagenFieldChanges}
+            className="py-3 px-2 border-none mb-2"
+          />
           <ListPhotos titleValue={titleSearch} />
+
           <div className="flex justify-end">
             <ContainerBtnSave>
               <button
@@ -180,6 +196,7 @@ const AddCard = ({ currentList }: Props) => {
             />{" "}
             <br />
             <p className="mt-5">List: {listValue || "___"}</p>{" "}
+            <img src={imagenValue} alt="" width="500" />
           </div>
         </div>
         <div className="col-span-4">

@@ -3,7 +3,7 @@ import PhotoExample from "./PhotoExample";
 import { createApi } from "unsplash-js";
 
 interface Props {
-  titleValue?: string;
+  titleValue: string;
 }
 
 const api = createApi({

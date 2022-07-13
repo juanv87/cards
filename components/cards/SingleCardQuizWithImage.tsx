@@ -13,7 +13,7 @@ interface Props {
   entries: Entry[];
   listSlug?: string;
 }
-const SingleCardQuiz = ({ entries, listSlug }: Props) => {
+const SingleCardQuizWithImage = ({ entries, listSlug }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [reloadCard, setReloadCard] = useState(true);
   const entriesByList = useMemo(
@@ -48,9 +48,11 @@ const SingleCardQuiz = ({ entries, listSlug }: Props) => {
           <ContainerCard>
             <h2 className="text-xl text-center mb-2">&#x1F4A1; Quiz</h2>
             <p className="text-center mb-2">¿Como traduces esto?</p>
-            <h3 className="text-2xl text-center mb-5">{entry?.title}</h3>
-            <p className="text-center blur-sm hover:blur-0 text-lg">
-              {entry?.meaning}
+            {entry.imagen && (
+              <img src={entry.imagen} className="w-full h-auto" alt="imagen" />
+            )}
+            <p className="text-center blur-sm hover:blur-0 text-lg mt-5">
+              {entry.meaning}
             </p>
             <hr className="my-5" />
             <div className="flex justify-center items-center gap-5">
@@ -63,4 +65,4 @@ const SingleCardQuiz = ({ entries, listSlug }: Props) => {
     </>
   );
 };
-export default SingleCardQuiz;
+export default SingleCardQuizWithImage;

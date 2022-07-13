@@ -3,25 +3,32 @@ import React, {
   ChangeEvent,
   ChangeEventHandler,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 import { EntriesContext } from "../../context/entries";
 import { Entry, List } from "../../interfaces";
 import { ContainerCard } from "../layouts/ContainerCard";
+import { createApi } from "unsplash-js";
+import PhotoExample from "../StockPhotos/PhotoExample";
+import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
+
 interface Props {
   entries: Entry[];
   listSlug: string;
 }
+
 const SingleCardQuizES = ({ entries, listSlug }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const entryBySlug = useMemo(
     () => entries.filter(({ list }) => list === listSlug),
     [entries]
   );
-
   const randomEntry =
     entryBySlug[Math.floor(Math.random() * entryBySlug.length)];
+
+  const image = useGetImageByTitleValue(randomEntry.title);
 
   return (
     <>

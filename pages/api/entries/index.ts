@@ -44,6 +44,7 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     fav,
     languaje,
     slugTitleValue,
+    imagen,
   } = req.body;
 
   const newEntry = new Entry({
@@ -57,6 +58,7 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     fav,
     languaje,
     slugTitleValue,
+    imagen,
   });
 
   try {

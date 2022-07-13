@@ -15,6 +15,7 @@ import SingleCardQuizNote from "../../../components/cards/SingleCardQuizNote";
 import SingleNote from "../../../components/notes/SingleNote";
 import AddNote from "../../../components/notes/AddNote";
 import { ContainerBtnAdd } from "../../../components/layouts/ContainerBtnAdd";
+import SingleCardQuizWithImage from "../../../components/cards/SingleCardQuizWithImage";
 
 interface Props {
   list: List;
@@ -78,6 +79,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
             <SingleCardQuiz listSlug={title} entries={entries} />
             <SingleCardQuizWithDesc listSlug={title} entries={entries} />
             <SingleCardQuizES listSlug={title} entries={entries} />
+            <SingleCardQuizWithImage listSlug={title} entries={entries} />
           </div>
         )}
         {notesByList.length > 0 && (

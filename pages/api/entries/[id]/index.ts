@@ -56,6 +56,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     phrase = entryToUpdate.phrase,
     status = entryToUpdate.status,
     list = entryToUpdate.list,
+    imagen = entryToUpdate.imagen,
     memoCount = entryToUpdate.memoCount,
   } = req.body;
 
@@ -69,6 +70,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         phrase,
         status,
         list,
+        imagen,
         memoCount,
       },
       { runValidators: true, new: true }

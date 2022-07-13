@@ -21,6 +21,7 @@ const entrySchema = new Schema({
   fav: { type: Boolean },
   languaje: { type: String },
   titleValue: { type: String },
+  imagen: { type: String },
   memoCount: { type: Number, default: 0 },
 });
 

@@ -28,6 +28,7 @@ export const EntriesProvider: any = ({ children }: any) => {
     fav: boolean,
     languaje: string,
     slugTitleValue: string,
+    imagen: string,
     memoCount: number
   ) => {
     // El 2do argumento de una peticion POST es la data que queremos mandar.
@@ -41,6 +42,7 @@ export const EntriesProvider: any = ({ children }: any) => {
       fav,
       languaje,
       slugTitleValue,
+      imagen,
       memoCount,
     });
     dispatch({ type: "[Entry] Add-Entry", payload: data });
@@ -56,6 +58,7 @@ export const EntriesProvider: any = ({ children }: any) => {
     list,
     fav,
     languaje,
+    imagen,
     memoCount,
   }: Entry) => {
     try {
@@ -69,6 +72,7 @@ export const EntriesProvider: any = ({ children }: any) => {
         list,
         fav,
         languaje,
+        imagen,
         memoCount,
       });
       dispatch({ type: "[Entry] Entry-Updated", payload: data });

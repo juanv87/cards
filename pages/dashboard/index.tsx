@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from "react";
 import { ContainerDashBoard } from "../../components/layouts/ContainerDashBoard";
 import { Header } from "../../components/layouts/Header";
 import { getWords } from "../../services/words";
+import { suggestCards } from "../../database/suggest-cards";
+import SingleCard from "../../components/cards/SingleCard";
 
 const DashBoard = () => {
   const [words, setWords] = useState([]);
@@ -25,27 +27,26 @@ const DashBoard = () => {
             <input type="text" onChange={onMeaningFieldChanges} />
             <button onClick={onSendWord}>Select</button>
             <ul>
+              {suggestCards.cards.map((entry) => {
+                return <SingleCard key={entry._id} entry={entry} />;
+              })}
+            </ul>
+            <ul>
               {words.length > 0 &&
                 words.map(({ word, meanings }: any) => (
                   <li key={word}>
-                    <ul>
-                      <li>
-                        {meanings.map(({ definitions }: any) => {
-                          return definitions.map(
-                            ({ definition, example }: any) => (
-                              <div key={definition} className="definition mb-5">
-                                <p>
-                                  <strong>Definition:</strong> {definition}
-                                </p>
-                                <p>
-                                  <strong>Example:</strong> {example}
-                                </p>
-                              </div>
-                            )
-                          );
-                        })}
-                      </li>
-                    </ul>
+                    {meanings.map(({ definitions }: any) => {
+                      return definitions.map(({ definition, example }: any) => (
+                        <div key={definition} className="definition mb-5">
+                          <p>
+                            <strong>Definition:</strong> {definition}
+                          </p>
+                          <p>
+                            <strong>Example:</strong> {example}
+                          </p>
+                        </div>
+                      ));
+                    })}
                   </li>
                 ))}
             </ul>

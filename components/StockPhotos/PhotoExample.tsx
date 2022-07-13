@@ -16,7 +16,7 @@ const PhotoExample: React.FC<{ photo: Photo }> = ({ photo }) => {
 
   return (
     <>
-      <img width="100" alt={user.name} className="img" src={urls.regular} />
+      <img width="150" alt={user.name} className="img" src={urls.regular} />
       {/* <a
         rel="noopener noreferrer"
         className="credit"

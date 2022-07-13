@@ -7,7 +7,6 @@ import Login from "../components/user/Login";
 import Register from "../components/user/Register";
 const Home: NextPage = () => {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <div>
