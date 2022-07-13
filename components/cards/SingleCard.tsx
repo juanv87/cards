@@ -71,7 +71,7 @@ const SingleCard = ({ entry }: Props) => {
     phrase: phraseValue !== "" ? phraseValue : phrase,
     meaning: meaningValue !== "" ? meaningValue : meaning,
     list: listValue !== "" ? listValue : list,
-    imagen: imagenValue || "",
+    imagen: imagenValue || imagen,
   };
 
   const onUpdate = () => {
@@ -219,10 +219,14 @@ const SingleCard = ({ entry }: Props) => {
           </button>
         )}
         {memoCount}
-        {(imagen && (
-          <img src={imagen} className="w-full h-auto" alt="imagen" />
-        )) ||
-          (imagenValue && <img src={imagenValue} width="400" alt="" />)}
+        <div className="text-center">
+          <img
+            src={imagenValue || imagen || "https://via.placeholder.com/300x200"}
+            alt="imagen"
+            width="300"
+            className="m-auto"
+          />
+        </div>
         {!entryEdit && (
           <>
             <ContainerBtnViewMore>
