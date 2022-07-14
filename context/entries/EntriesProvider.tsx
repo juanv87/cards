@@ -86,6 +86,10 @@ export const EntriesProvider: any = ({ children }: any) => {
     dispatch({ type: "[Entry] Refresh-Data", payload: data });
   };
 
+  const deleteEntry = async (_id: string) => {
+    await entriesApi.delete(`/entries/${_id}`);
+  };
+
   // todo: crear endpoint para traer cards por listas.
 
   useEffect(() => {
@@ -98,6 +102,7 @@ export const EntriesProvider: any = ({ children }: any) => {
         ...state,
         addNewEntry,
         updateEntry,
+        deleteEntry,
       }}
     >
       {children}

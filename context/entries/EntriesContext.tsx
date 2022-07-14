@@ -17,6 +17,7 @@ interface ContextProps {
     memoCount: number
   ) => void;
   updateEntry: (newEntry: Entry) => void;
+  deleteEntry: (id: string) => void;
 }
 
 export const EntriesContext = createContext({} as ContextProps);
