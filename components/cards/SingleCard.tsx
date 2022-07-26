@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Editor } from "@tinymce/tinymce-react";
 import Link from "next/link";
 import React, {
@@ -236,14 +237,14 @@ const SingleCard = ({ entry }: Props) => {
           }
           {memoCount}
           <div className="text-center">
-            <img
-              src={
-                imagenValue || imagen || "https://via.placeholder.com/300x200"
-              }
-              alt="imagen"
-              width="300"
-              className="m-auto"
-            />
+            {imagenValue || imagen ? (
+              <img
+                src={imagenValue || imagen}
+                alt="imagen"
+                width="300"
+                className="m-auto"
+              />
+            ) : null}
           </div>
           {!entryEdit && (
             <>
