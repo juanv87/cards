@@ -14,7 +14,8 @@ interface ContextProps {
     languaje: string,
     slugTitleValue: string,
     imagen: string,
-    memoCount: number
+    memoCount: number,
+    user: string
   ) => void;
   updateEntry: (newEntry: Entry) => void;
   deleteEntry: (id: string) => void;

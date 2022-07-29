@@ -12,6 +12,7 @@ export interface Entry {
   slugTitleValue: string;
   imagen: string;
   memoCount: number;
+  user: string;
 }
 
 export type EntryStatus = "pending" | "in-progress" | "finished" | "publish";

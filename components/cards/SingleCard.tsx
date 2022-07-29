@@ -7,6 +7,7 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { authContext } from "../../context/authContext";
 import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
@@ -24,6 +25,8 @@ interface Props {
   entry: Entry;
 }
 const SingleCard = ({ entry }: Props) => {
+  const { user } = useContext(authContext);
+
   const [entryEdit, setEntryEdit] = useState(false);
   const [titleValue, settitleValue] = useState("");
   const [descValue, setDescValue] = useState("");
@@ -75,6 +78,7 @@ const SingleCard = ({ entry }: Props) => {
     meaning: meaningValue !== "" ? meaningValue : meaning,
     list: listValue !== "" ? listValue : list,
     imagen: imagenValue || imagen,
+    user: user?.uid,
   };
 
   const onUpdate = () => {
