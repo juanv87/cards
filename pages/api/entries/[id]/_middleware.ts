@@ -6,7 +6,7 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const checkMongoIDRegExp = new RegExp("^[0-9a-fA-F]{24}$");
 
-  if (!checkMongoIDRegExp.test(id)) {
+  if (!checkMongoIDRegExp.test(id as string)) {
     // return res.status(400).json({ message: "El ID no es válido " + id });
     return new Response(
       JSON.stringify({ message: "El ID no es válido " + id }),

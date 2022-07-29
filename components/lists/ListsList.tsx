@@ -9,10 +9,10 @@ interface Props {
 
 const ListsList: FC<Props> = ({ status }) => {
   const { lists } = useContext(ListsContext);
-  const listsByStatus = useMemo(
-    () => lists.filter((list) => list.status === status),
-    [lists]
-  );
+  // const listsByStatus = useMemo(
+  //   () => lists.filter((list) => list.status === status),
+  //   [lists]
+  // );
   return (
     <>
       <div className="grid grid-cols-12 gap-5 w-full">

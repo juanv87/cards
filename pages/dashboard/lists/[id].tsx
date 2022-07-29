@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetServerSideProps } from "next";
 import React, { useContext, useMemo, useState } from "react";
 import { ContainerDashBoard } from "../../../components/layouts/ContainerDashBoard";

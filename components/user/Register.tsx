@@ -22,7 +22,7 @@ const Register = () => {
     try {
       await signUp(user.email, user.password);
       Router.push("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === "auth/internal-error") {
         setError("😳 Error interno");
       }

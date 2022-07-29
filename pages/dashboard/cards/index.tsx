@@ -30,7 +30,7 @@ const Cards = () => {
         </div>
         {addCard && <AddCard />}
         {addNote && <AddNote />}
-        <CardsList status="publish" />
+        <CardsList />
       </ContainerDashBoard>
     </>
   );

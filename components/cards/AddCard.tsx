@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, {
   ChangeEvent,
   useContext,
@@ -13,11 +14,10 @@ import IconAddCard from "../icons/IconAddCard";
 import IconSearch from "../icons/IconSearch";
 
 import PhotoExample from "../StockPhotos/PhotoExample";
-import ListPhotos from "../StockPhotos/ListPhotos";
 import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
 import { authContext } from "../../context/authContext";
 interface Props {
-  currentList: string;
+  currentList?: string;
 }
 const AddCard = ({ currentList }: Props) => {
   const { user } = useContext(authContext);
@@ -169,7 +169,6 @@ const AddCard = ({ currentList }: Props) => {
             onChange={onImagenFieldChanges}
             className="py-3 px-2 border-none mb-2"
           />
-          <ListPhotos titleValue={titleSearch} />
 
           <div className="flex justify-end">
             <ContainerBtnSave>

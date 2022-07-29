@@ -9,7 +9,7 @@ const Login = () => {
   });
 
   const { logIn } = useAuth();
-  const [error, setError] = useState("");
+  const [errorMsj, setError] = useState("");
 
   const handleChange = ({
     target: { name, value },
@@ -22,8 +22,7 @@ const Login = () => {
     try {
       await logIn(user.email, user.password);
       Router.push("/dashboard");
-    } catch (error) {
-      console.log(error.message);
+    } catch (error: any) {
       if (error.code === "auth/user-not-found") {
         setError("😳 Cuenta no encontrada");
       }
@@ -62,9 +61,9 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
-      {error && (
+      {errorMsj && (
         <p className="mt-3 text-red-700 font-semibold bg-red-300 p-3 rounded-2xl border-solid border-red-600 border-2">
-          {error}
+          {errorMsj}
         </p>
       )}
     </div>

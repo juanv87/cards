@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../../context/authContext";
 import { getWords } from "../../services/words";
