@@ -13,7 +13,7 @@ import { NotesContext } from "../../context/notes";
 import IconNote from "../icons/IconNote";
 interface Props {
   note: Note;
-  currentList: string;
+  currentList?: string;
 }
 const SingleNote = ({ note, currentList }: Props) => {
   const [noteEdit, setNoteEdit] = useState(false);
@@ -42,7 +42,7 @@ const SingleNote = ({ note, currentList }: Props) => {
     title: titleValue !== "" ? titleValue : title,
     description: descriptionValue !== "" ? descriptionValue : description,
     content: contentValue !== "" ? contentValue : content,
-    list: listValue || currentList,
+    list: listValue || currentList || "",
   };
 
   const onUpdate = () => {

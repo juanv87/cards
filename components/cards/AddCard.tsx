@@ -15,10 +15,13 @@ import IconSearch from "../icons/IconSearch";
 import PhotoExample from "../StockPhotos/PhotoExample";
 import ListPhotos from "../StockPhotos/ListPhotos";
 import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
+import { authContext } from "../../context/authContext";
 interface Props {
   currentList: string;
 }
 const AddCard = ({ currentList }: Props) => {
+  const { user } = useContext(authContext);
+
   const { addNewEntry } = useContext(EntriesContext);
   const [titleValue, settitleValue] = useState("");
   const [meaningValue, setMeaningValue] = useState("");
@@ -77,7 +80,8 @@ const AddCard = ({ currentList }: Props) => {
         .replace(/[^\w-]+/g, ""),
 
       imagenValue,
-      0
+      0,
+      user?.id
     );
     settitleValue("");
     setMeaningValue("");

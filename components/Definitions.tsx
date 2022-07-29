@@ -9,12 +9,12 @@ const Definitions = ({ selectWord }: any) => {
     <>
       <ul className="mt-5 text-sm">
         {wordDefinition.length > 0 &&
-          wordDefinition.map(({ word, meanings }) => (
+          wordDefinition.map(({ word, meanings }: any) => (
             <li key={word}>
               <ul>
                 <li>
-                  {meanings.map(({ definitions }) => {
-                    return definitions.map(({ definition, example }) => (
+                  {meanings?.map(({ definitions }: any) => {
+                    return definitions.map(({ definition, example }: any) => (
                       <div key={definition} className="definition mb-2">
                         <p>
                           <strong>Definition:</strong> {definition}
