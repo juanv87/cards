@@ -23,7 +23,7 @@ const entrySchema = new Schema({
   titleValue: { type: String },
   imagen: { type: String },
   memoCount: { type: Number, default: 0 },
-  user: { stype: String },
+  user: { type: String },
 });
 
 const EntryModel: Model<IEntry> =
