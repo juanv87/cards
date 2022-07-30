@@ -21,9 +21,7 @@ const Notes = () => {
           </div>
         </button>
         {addList && <AddList />}
-        <div className="flex">
-          <NotesList />
-        </div>
+        <div className="flex">{/* <NotesList /> */}</div>
       </ContainerDashBoard>
     </>
   );
