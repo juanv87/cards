@@ -33,6 +33,7 @@ const Register = () => {
       setLoading(false);
       Router.push("/dashboard");
     } catch (error: any) {
+      setLoading(false);
       if (error.code === "auth/internal-error") {
         setError("😳 Error interno");
       }

@@ -9,15 +9,7 @@ import { NotesProvider } from "../context/notes";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <ListsProvider>
-        <EntriesProvider>
-          <NotesProvider>
-            <UIProvider>
-              <Component {...pageProps} />;
-            </UIProvider>
-          </NotesProvider>
-        </EntriesProvider>
-      </ListsProvider>
+      <Component {...pageProps} />;
     </AuthProvider>
   );
 }

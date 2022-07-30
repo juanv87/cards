@@ -10,8 +10,8 @@ import IconSingleListMenu from "../icons/IconSingleListMenu";
 import LoaderLists from "../loaders/LoaderLists";
 
 export const DashMenu = ({ showItems = true, showMenu = true }) => {
-  const { lists } = useContext(ListsContext);
-  const { notes } = useContext(NotesContext);
+  // const { lists } = useContext(ListsContext);
+  // const { notes } = useContext(NotesContext);
 
   return (
     <>
@@ -31,49 +31,6 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
               <a className={`text-lg ${!showMenu && "hidden"}`}>Lists</a>
             </Link>
           </div>
-          {showItems && (
-            <ul>
-              {lists.length === 0 ? (
-                <>
-                  <div className="mt-5">
-                    <LoaderLists />
-                  </div>
-                </>
-              ) : (
-                lists
-                  .sort((a, b) => (a.pinned < b.pinned ? 1 : -1))
-                  .map(({ title, _id, chosenEmoji, pinned }) => (
-                    <li key={_id}>
-                      <div className="flex items-center gap-1 justify-between">
-                        <a className="flex" href={`/dashboard/lists/${_id}`}>
-                          {chosenEmoji ? (
-                            <span
-                              className={showMenu ? "text-base" : "text-xl"}
-                            >
-                              {chosenEmoji}
-                            </span>
-                          ) : (
-                            <IconSingleListMenu size={showMenu ? "25" : "30"} />
-                          )}
-                          <span
-                            className={`text-base ml-2 ${
-                              !showMenu && "hidden"
-                            } `}
-                          >
-                            {title}
-                          </span>
-                        </a>
-                        {pinned && (
-                          <>
-                            <div className="mr-3 text-sm opacity-50">📌</div>
-                          </>
-                        )}
-                      </div>
-                    </li>
-                  ))
-              )}
-            </ul>
-          )}
         </li>
         <li>
           <div className="flex items-center gap-2">
@@ -82,32 +39,6 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
               <a className={`text-lg ${!showMenu && "hidden"}`}>Notes</a>
             </Link>
           </div>
-          {showItems && (
-            <ul>
-              {notes.length === 0 ? (
-                <>
-                  <div className="mt-5">
-                    <LoaderLists />
-                  </div>
-                </>
-              ) : (
-                notes.map(({ title, _id }) => (
-                  <li key={_id}>
-                    <div className="flex items-center gap-1">
-                      <div className="weight-bold">-</div>
-                      <a href={`/dashboard/notes/${_id}`}>
-                        <span
-                          className={`text-base ml-2 ${!showMenu && "hidden"} `}
-                        >
-                          {title}
-                        </span>
-                      </a>
-                    </div>
-                  </li>
-                ))
-              )}
-            </ul>
-          )}
         </li>
         <li>
           <div className="flex items-center gap-2">
