@@ -35,7 +35,7 @@ const AddNote = ({ currentList }: Props) => {
     setContentValue("");
     setListValue("");
   };
-  const { lists } = useContext(ListsContext);
+  // const { lists } = useContext(ListsContext);
   return (
     <>
       <div className="flex">
@@ -70,7 +70,7 @@ const AddNote = ({ currentList }: Props) => {
             }}
             onEditorChange={onContentFieldChanges}
           />
-          {!currentList && (
+          {/* {!currentList && (
             <select
               className="px-4 py-3 w-full"
               onChange={onListFieldChanges}
@@ -83,7 +83,7 @@ const AddNote = ({ currentList }: Props) => {
                 </option>
               ))}
             </select>
-          )}
+          )} */}
           <div className="flex justify-end">
             <ContainerBtnSave>
               <button

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect, useContext } from "react";
 import { Router, useRouter } from "next/router";
 import { ContainerDashBoard } from "../../components/layouts/ContainerDashBoard";
 import { Header } from "../../components/layouts/Header";
@@ -9,26 +9,22 @@ import SingleCard from "../../components/cards/SingleCard";
 import { db } from "../../lib/firebase/firebase";
 import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { useAuth } from "../../components/hooks/useAuth";
+import { authContext } from "../../context/authContext";
 
 const DashBoard = () => {
+  const { user } = useContext(authContext);
+
   const [users, setUsers] = useState([]);
 
   const usersCollectionRef = collection(db, "usuarios");
 
-  const { user } = useAuth();
-  console.log(user);
+  const emailUser = user && user.email;
+  console.log("index dashboard", emailUser);
 
   // const getUsers = async () => {
   //   const data = await getDocs(usersCollectionRef);
   //   setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   // };
-  const router = useRouter();
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-    // getUsers();
-  }, []);
 
   const onSetPrueba = async () => {
     await setDoc(doc(db, "usuarios", user.email, "cards", "Card title"), {

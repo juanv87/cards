@@ -16,11 +16,14 @@ import IconSearch from "../icons/IconSearch";
 import PhotoExample from "../StockPhotos/PhotoExample";
 import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
 import { authContext } from "../../context/authContext";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../lib/firebase/firebase";
 interface Props {
   currentList?: string;
 }
 const AddCard = ({ currentList }: Props) => {
   const { user } = useContext(authContext);
+  console.log(user.uid);
 
   const { addNewEntry } = useContext(EntriesContext);
   const [titleValue, settitleValue] = useState("");
@@ -54,35 +57,27 @@ const AddCard = ({ currentList }: Props) => {
     setImagenValue(event.target.value);
   };
 
-  const { lists } = useContext(ListsContext);
+  // const { lists } = useContext(ListsContext);
   const image = useGetImageByTitleValue(titleValue);
 
-  const onSave = () => {
-    console.log("onSave", image);
-
+  const onSave = async () => {
     if (titleValue.length === 0) return;
-    addNewEntry(
-      titleValue,
-      descValue,
-      statusValue,
-      meaningValue,
-      phraseValue,
-      currentList ||
-        listValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-      favValue,
-      languajeValue,
-      titleValue
+    await setDoc(doc(db, "usuarios", user.email, "general", titleValue), {
+      title: titleValue,
+      description: descValue,
+      meaning: meaningValue,
+      phrase: phraseValue,
+      list: listValue,
+      fav: favValue,
+      languaje: languajeValue,
+      slugTitleValue: titleValue
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[^\w-]+/g, ""),
-
-      imagenValue,
-      0,
-      user?.id
-    );
+      imagen: imagenValue,
+      memoCount: 0,
+      userId: user.uid,
+    });
     settitleValue("");
     setMeaningValue("");
     setPhraseValue("");
@@ -146,7 +141,7 @@ const AddCard = ({ currentList }: Props) => {
             onEditorChange={onPhraseFieldChanges}
           />
 
-          {currentList ? (
+          {/* {currentList ? (
             ""
           ) : (
             <select
@@ -161,7 +156,7 @@ const AddCard = ({ currentList }: Props) => {
                 </option>
               ))}
             </select>
-          )}
+          )} */}
           <input
             value={imagenValue}
             type="text"

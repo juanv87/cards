@@ -11,6 +11,7 @@ export const authContext = createContext(null as any);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState(null as any);
+  const [loadingUser, setLoadingUser] = useState(false);
 
   const signUp = async (email: string, password: string) => {
     await createUserWithEmailAndPassword(auth, email, password);
@@ -22,14 +23,21 @@ export function AuthProvider({ children }: any) {
   const logOut = () => signOut(auth);
 
   useEffect(() => {
+    setLoadingUser(true);
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        setUser(currentUser);
+        setLoadingUser(false);
+      } else {
+        setUser(null);
+        setLoadingUser(false);
+      }
     });
     return () => unSubscribe();
   }, []);
 
   return (
-    <authContext.Provider value={{ signUp, logIn, user, logOut }}>
+    <authContext.Provider value={{ signUp, logIn, user, logOut, loadingUser }}>
       {children}
     </authContext.Provider>
   );

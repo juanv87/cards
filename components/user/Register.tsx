@@ -25,10 +25,23 @@ const Register = () => {
     try {
       setLoading(true);
       await signUp(user.email, user.password);
-
+      // save user to local storage
+      localStorage.setItem("userEmail", JSON.stringify(user.email));
       await setDoc(doc(db, "usuarios", user.email), {
-        cards: "",
+        name: user.email.split("@")[0],
         email: user.email,
+        password: user.password,
+        createdAt: new Date(),
+        avatar: "",
+      });
+      await addDoc(collection(db, "usuarios", user.email, "general"), {
+        description: "",
+        title: "",
+        createdAt: "",
+        status: "",
+        slugTitleValue: "",
+        chosenEmoji: "",
+        pinned: "",
       });
       setLoading(false);
       Router.push("/dashboard");

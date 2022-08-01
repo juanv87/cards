@@ -6,10 +6,12 @@ import { Header } from "../../../components/layouts/Header";
 import IconAddCard from "../../../components/icons/IconAddCard";
 import { ContainerBtnAdd } from "../../../components/layouts/ContainerBtnAdd";
 import AddNote from "../../../components/notes/AddNote";
+import { useAuth } from "../../../components/hooks/useAuth";
 
 const Cards = () => {
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
+
   return (
     <>
       <Header />
@@ -30,7 +32,7 @@ const Cards = () => {
         </div>
         {addCard && <AddCard />}
         {addNote && <AddNote />}
-        {/* <CardsList /> */}
+        <CardsList />
       </ContainerDashBoard>
     </>
   );
