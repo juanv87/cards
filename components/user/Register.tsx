@@ -25,8 +25,6 @@ const Register = () => {
     try {
       setLoading(true);
       await signUp(user.email, user.password);
-      // save user to local storage
-      localStorage.setItem("userEmail", JSON.stringify(user.email));
       await setDoc(doc(db, "usuarios", user.email), {
         name: user.email.split("@")[0],
         email: user.email,
@@ -34,7 +32,7 @@ const Register = () => {
         createdAt: new Date(),
         avatar: "",
       });
-      await addDoc(collection(db, "usuarios", user.email, "general"), {
+      await addDoc(collection(db, "usuarios", user.email, "lists"), {
         description: "",
         title: "",
         createdAt: "",

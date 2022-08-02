@@ -17,15 +17,23 @@ import SingleNote from "../../../components/notes/SingleNote";
 import AddNote from "../../../components/notes/AddNote";
 import { ContainerBtnAdd } from "../../../components/layouts/ContainerBtnAdd";
 import SingleCardQuizWithImage from "../../../components/cards/SingleCardQuizWithImage";
-import { collection, doc, getDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase/firebase";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { auth, db } from "../../../lib/firebase/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface Props {
   list: List;
   notesByList: Note[];
 }
 
-const SingleListPage = ({ list, notesByList, dataList }: any) => {
+const SingleListPage = ({ notesByList, dataList }: any) => {
   // todo: traer listas filtradas por el id
 
   const { title, slugTitleValue, chosenEmoji, description } = dataList;
@@ -121,9 +129,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     id: string;
   };
 
-  const list = await dbLists.getListById(id);
-  //const entriesByList = await dbLists.getEntriesByList()
-
   const colRef = collection(db, "usuarios", "juanv87@gmail.com", "lists");
   const result = await getDoc(doc(colRef, id));
   // serialize the result to JSON
@@ -142,7 +147,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      list,
       // notesByList,
       dataList,
     },
