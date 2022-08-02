@@ -20,7 +20,7 @@ export const listsReducer = (
       return {
         ...state,
         lists: state.lists.map((list) => {
-          if (list._id === action.payload._id) {
+          if (list.id === action.payload.id) {
             list.status = action.payload.status;
             list.description = action.payload.description;
           }

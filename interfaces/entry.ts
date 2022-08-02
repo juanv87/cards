@@ -1,5 +1,5 @@
 export interface Entry {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   status?: EntryStatus;

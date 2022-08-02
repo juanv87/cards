@@ -4,8 +4,13 @@ import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import IconAddCard from "../icons/IconAddCard";
 import { listEmojis } from "../emojis";
 import { Editor } from "@tinymce/tinymce-react";
+import { authContext } from "../../context/authContext";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../lib/firebase/firebase";
 
 const AddList = () => {
+  const { user } = useContext(authContext);
+
   const { addNewList } = useContext(ListsContext);
   const [titleValue, settitleValue] = useState("");
   const [descValue, setDescValue] = useState("");
@@ -25,20 +30,36 @@ const AddList = () => {
   const onDescFieldChanges = (content: any) => {
     setDescValue(content);
   };
-  const onSave = () => {
+  const onSave = async () => {
     if (titleValue.length === 0) return;
     setPinnedValue(false);
-    addNewList(
-      titleValue,
-      descValue,
-      statusValue,
-      titleValue
+    await setDoc(doc(db, "usuarios", user.email, "lists", titleValue), {
+      title: titleValue,
+      description: descValue,
+      titleSlug: titleValue
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[^\w-]+/g, ""),
       chosenEmoji,
-      pinnedValue
+      pinnedValue,
+    });
+    await addDoc(
+      collection(db, "usuarios", user.email, "lists", titleValue, "cards"),
+      {
+        title: "",
+        description: "",
+        meaning: "",
+        phrase: "",
+        list: "",
+        fav: "",
+        languaje: "",
+        slugTitleValue: "",
+        imagen: "",
+        memoCount: "",
+        userId: "",
+      }
     );
+
     setTouched(false);
     settitleValue("");
     setDescValue("");

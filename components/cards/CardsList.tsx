@@ -10,28 +10,12 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
 import { authContext } from "../../context/authContext";
 import { useAuth } from "../hooks/useAuth";
+import useGetLists from "../hooks/useGetLists";
 
 const CardsList: FC = () => {
   // const { entries } = useContext(EntriesContext);
 
-  const { user } = useAuth();
-  const emailUser = user && user.email;
-  const [cards, setCards] = useState([]);
-  const [loadingCards, setLoadingCards] = useState(true);
-
-  const getData = async () => {
-    if (user) {
-      setLoadingCards(true);
-      const colRef = collection(db, "usuarios", emailUser, "general");
-      const data = await getDocs(colRef);
-      setCards(user && data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setLoadingCards(false);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, [user]);
+  const { lists, loadingLists } = useGetLists();
 
   return (
     <>
@@ -40,14 +24,14 @@ const CardsList: FC = () => {
         {/* <SingleCardQuizOptions entries={entries} entry={randomEntry} /> */}
       </div>
       {/* <FilterByEntries entries={entries} /> */}
-      {console.log(cards)}
-      {loadingCards ? (
+      {console.log(lists)}
+      {loadingLists ? (
         "Cargando..."
-      ) : cards.length > 0 ? (
+      ) : lists.length > 0 ? (
         <div className="grid grid-cols-12 gap-5 w-full">
-          {cards?.map((entry: any) => (
+          {lists?.map((entry: any) => (
             <div key={entry.id} className="col-span-4 mt-8">
-              <SingleCard key={entry.id} entry={entry} />
+              <SingleCard entry={entry} />
             </div>
           ))}
         </div>

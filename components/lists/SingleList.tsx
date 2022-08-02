@@ -67,7 +67,7 @@ const SingleList = ({ list }: Props) => {
           <h3 className="text-2xl flex gap-1 mb-2">
             {!listEdit && (emojiValue || chosenEmoji)}
 
-            <Link href={`/dashboard/lists/${list._id}`}>
+            <Link href={`/dashboard/lists/${list.id}`}>
               <a>{titleValue || title}</a>
             </Link>
           </h3>

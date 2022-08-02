@@ -2,6 +2,8 @@ import { useEffect, useReducer } from "react";
 import { List } from "../../interfaces";
 import { listsApi } from "../../api";
 import { ListsContext, listsReducer } from "./";
+import { collection } from "firebase/firestore";
+import { db } from "../../lib/firebase/firebase";
 
 export interface ListsState {
   lists: List[];
@@ -34,7 +36,7 @@ export const ListsProvider = ({ children }: any) => {
   };
 
   const updateList = async ({
-    _id,
+    id,
     title,
     description,
     status,
@@ -43,8 +45,8 @@ export const ListsProvider = ({ children }: any) => {
     pinned,
   }: List) => {
     try {
-      const { data } = await listsApi.put<List>(`/lists/${_id}`, {
-        _id,
+      const { data } = await listsApi.put<List>(`/lists/${id}`, {
+        id,
         title,
         description,
         status,

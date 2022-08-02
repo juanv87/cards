@@ -17,22 +17,25 @@ import SingleNote from "../../../components/notes/SingleNote";
 import AddNote from "../../../components/notes/AddNote";
 import { ContainerBtnAdd } from "../../../components/layouts/ContainerBtnAdd";
 import SingleCardQuizWithImage from "../../../components/cards/SingleCardQuizWithImage";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../../lib/firebase/firebase";
 
 interface Props {
   list: List;
   notesByList: Note[];
 }
 
-const SingleListPage = ({ list, notesByList }: Props) => {
+const SingleListPage = ({ list, notesByList, dataList }: any) => {
   // todo: traer listas filtradas por el id
-  const { title, slugTitleValue, chosenEmoji, description } = list;
+
+  const { title, slugTitleValue, chosenEmoji, description } = dataList;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
-  const { entries } = useContext(EntriesContext);
-  const entryBySlug = useMemo(
-    () => entries.filter(({ list }) => list === title),
-    [entries]
-  );
+  // const { entries } = useContext(EntriesContext);
+  // const entryBySlug = useMemo(
+  //   () => entries.filter(({ list }) => list === title),
+  //   [entries]
+  // );
 
   return (
     <>
@@ -72,6 +75,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
             />
           )}
         </div>
+        {/* 
         {addCard && <AddCard currentList={title} />}
         {addNote && <AddNote currentList={title} />}
         {entryBySlug.length > 0 && (
@@ -86,7 +90,7 @@ const SingleListPage = ({ list, notesByList }: Props) => {
         {notesByList.length > 0 && (
           <div className="grid grid-cols-12 gap-5 mt-8 w-full">
             {notesByList.map((entry) => (
-              <div key={entry._id} className="col-span-4">
+              <div key={entry.id} className="col-span-4">
                 <SingleNote note={entry} currentList={title} />
               </div>
             ))}
@@ -98,12 +102,13 @@ const SingleListPage = ({ list, notesByList }: Props) => {
             {entryBySlug
               .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
               .map((entry) => (
-                <div key={entry._id} className="col-span-4">
+                <div key={entry.id} className="col-span-4">
                   <SingleCard entry={entry} />
                 </div>
               ))}
           </div>
         )}
+       */}
       </ContainerDashBoard>
     </>
   );
@@ -119,21 +124,27 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const list = await dbLists.getListById(id);
   //const entriesByList = await dbLists.getEntriesByList()
 
-  if (!list) {
-    return {
-      redirect: {
-        destination: "/dashboard/cards",
-        permanent: false,
-      },
-    };
-  }
+  const colRef = collection(db, "usuarios", "juanv87@gmail.com", "lists");
+  const result = await getDoc(doc(colRef, id));
+  // serialize the result to JSON
+  const dataList = result.data();
 
-  const notesByList = await dbNotes.getNotesByList(list?.title);
+  // if (!list) {
+  //   return {
+  //     redirect: {
+  //       destination: "/dashboard/cards",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
+  // const notesByList = await dbNotes.getNotesByList(list?.title);
 
   return {
     props: {
       list,
-      notesByList,
+      // notesByList,
+      dataList,
     },
   };
 };

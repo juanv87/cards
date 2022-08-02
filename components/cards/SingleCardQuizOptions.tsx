@@ -27,8 +27,8 @@ const SingleCardQuizOptions = ({ entry, entries }: Props) => {
           <p className="text-center">Elije una respuesta:</p>
           <h3 className="text-2xl text-center">{entry?.title}</h3>
           <ul>
-            {entriesByList.map(({ meaning, _id }) => (
-              <li key={_id}>{meaning}</li>
+            {entriesByList.map(({ meaning, id }) => (
+              <li key={id}>{meaning}</li>
             ))}
           </ul>
         </ContainerCard>

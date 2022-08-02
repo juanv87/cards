@@ -7,6 +7,8 @@ import { Entry, EntryStatus } from "../../interfaces";
 import { entriesApi } from "../../api";
 
 import { EntriesContext, entriesReducer } from "./";
+import { collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../lib/firebase/firebase";
 
 export interface EntriesState {
   entries: Entry[];
@@ -51,7 +53,7 @@ export const EntriesProvider: any = ({ children }: any) => {
   };
 
   const updateEntry = async ({
-    _id,
+    id,
     title,
     description,
     status,
@@ -65,8 +67,8 @@ export const EntriesProvider: any = ({ children }: any) => {
     user,
   }: Entry) => {
     try {
-      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
-        _id,
+      const { data } = await entriesApi.put<Entry>(`/entries/${id}`, {
+        id,
         title,
         description,
         status,
@@ -90,8 +92,12 @@ export const EntriesProvider: any = ({ children }: any) => {
     dispatch({ type: "[Entry] Refresh-Data", payload: data });
   };
 
-  const deleteEntry = async (_id: string) => {
-    await entriesApi.delete(`/entries/${_id}`);
+  const deleteEntry = async (id: string) => {
+    await entriesApi.delete(`/entries/${id}`);
+  };
+  const deleteCard = async (id: string) => {
+    const colRef = collection(db, "usuarios", "juanv87@gmail.com", "general");
+    await deleteDoc(doc(colRef, "safa"));
   };
 
   // todo: crear endpoint para traer cards por listas.
@@ -107,6 +113,7 @@ export const EntriesProvider: any = ({ children }: any) => {
         addNewEntry,
         updateEntry,
         deleteEntry,
+        deleteCard,
       }}
     >
       {children}

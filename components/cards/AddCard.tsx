@@ -16,13 +16,23 @@ import IconSearch from "../icons/IconSearch";
 import PhotoExample from "../StockPhotos/PhotoExample";
 import useGetImageByTitleValue from "../hooks/useGetImageByTitleValue";
 import { authContext } from "../../context/authContext";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
 interface Props {
   currentList?: string;
 }
 const AddCard = ({ currentList }: Props) => {
   const { user } = useContext(authContext);
+  const emailUser = user && user.email;
+  const [loadingCards, setLoadingCards] = useState(true);
+  const [cards, setCards] = useState([]);
   console.log(user.uid);
 
   const { addNewEntry } = useContext(EntriesContext);
@@ -60,24 +70,42 @@ const AddCard = ({ currentList }: Props) => {
   // const { lists } = useContext(ListsContext);
   const image = useGetImageByTitleValue(titleValue);
 
+  const [lists, setLists] = useState([]);
+  const getData = async () => {
+    if (user) {
+      setLoadingCards(true);
+      const colRef = collection(db, "usuarios", emailUser, "lists");
+      const data = await getDocs(colRef);
+      setLists(user && data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setLoadingCards(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [user]);
+
   const onSave = async () => {
     if (titleValue.length === 0) return;
-    await setDoc(doc(db, "usuarios", user.email, "general", titleValue), {
-      title: titleValue,
-      description: descValue,
-      meaning: meaningValue,
-      phrase: phraseValue,
-      list: listValue,
-      fav: favValue,
-      languaje: languajeValue,
-      slugTitleValue: titleValue
-        .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, ""),
-      imagen: imagenValue,
-      memoCount: 0,
-      userId: user.uid,
-    });
+    await setDoc(
+      doc(db, "usuarios", user.email, "lists", listValue, "cards", titleValue),
+      {
+        title: titleValue,
+        description: descValue,
+        meaning: meaningValue,
+        phrase: phraseValue,
+        list: listValue,
+        fav: favValue,
+        languaje: languajeValue,
+        slugTitleValue: titleValue
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, ""),
+        imagen: imagenValue,
+        memoCount: 0,
+        userId: user.uid,
+      }
+    );
     settitleValue("");
     setMeaningValue("");
     setPhraseValue("");
@@ -140,8 +168,7 @@ const AddCard = ({ currentList }: Props) => {
             }}
             onEditorChange={onPhraseFieldChanges}
           />
-
-          {/* {currentList ? (
+          {currentList ? (
             ""
           ) : (
             <select
@@ -150,13 +177,13 @@ const AddCard = ({ currentList }: Props) => {
               name="lists"
               id=""
             >
-              {lists.map(({ _id, title, chosenEmoji }) => (
-                <option key={_id} value={title}>
+              {lists.map(({ id, title, chosenEmoji }) => (
+                <option key={id} value={title}>
                   {chosenEmoji} {title}
                 </option>
               ))}
             </select>
-          )} */}
+          )}
           <input
             value={imagenValue}
             type="text"

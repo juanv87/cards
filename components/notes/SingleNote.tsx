@@ -63,7 +63,7 @@ const SingleNote = ({ note, currentList }: Props) => {
         {!noteEdit && (
           <h3 className="text-2xl flex gap-1 mb-2 items-center">
             <IconNote size="30" />
-            <Link href={`/dashboard/notes/${note._id}`}>
+            <Link href={`/dashboard/notes/${note.id}`}>
               <a>{titleValue || title}</a>
             </Link>
           </h3>
@@ -121,8 +121,8 @@ const SingleNote = ({ note, currentList }: Props) => {
             name="lists"
             value={listValue || list}
           >
-            {lists.map(({ _id, title, chosenEmoji }) => (
-              <option className="text-lg" key={_id} value={title}>
+            {lists.map(({ id, title, chosenEmoji }) => (
+              <option className="text-lg" key={id} value={title}>
                 {chosenEmoji} {title}
               </option>
             ))}

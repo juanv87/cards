@@ -19,6 +19,7 @@ interface ContextProps {
   ) => void;
   updateEntry: (newEntry: Entry) => void;
   deleteEntry: (id: string) => void;
+  deleteCard: (id: string) => void;
 }
 
 export const EntriesContext = createContext({} as ContextProps);

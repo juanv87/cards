@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Editor } from "@tinymce/tinymce-react";
+import { collection, deleteDoc, doc } from "firebase/firestore";
 import Link from "next/link";
 import React, {
   ChangeEvent,
@@ -11,6 +12,7 @@ import { authContext } from "../../context/authContext";
 import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
+import { db } from "../../lib/firebase/firebase";
 import Definitions from "../Definitions";
 import IconBtnSave from "../icons/IconBtnSave";
 import IconDelete from "../icons/IconDelete";
@@ -25,6 +27,8 @@ interface Props {
   entry: Entry;
 }
 const SingleCard = ({ entry }: Props) => {
+  console.log(entry);
+
   const { user } = useContext(authContext);
 
   const [entryEdit, setEntryEdit] = useState(false);
@@ -65,11 +69,11 @@ const SingleCard = ({ entry }: Props) => {
     list,
     fav,
     languaje,
-    _id,
+    id,
     memoCount,
     imagen,
   } = entry;
-  const { updateEntry, deleteEntry } = useContext(EntriesContext);
+  const { updateEntry, deleteEntry, deleteCard } = useContext(EntriesContext);
   const newEntryUpdate = {
     ...entry,
     title: titleValue !== "" ? titleValue : title,
@@ -90,8 +94,9 @@ const SingleCard = ({ entry }: Props) => {
     setEntryEdit(true);
   };
 
-  const onEntryDelete = () => {
-    deleteEntry(_id);
+  const onEntryDelete = async () => {
+    const colRef = collection(db, "usuarios", "juanv87@gmail.com", "general");
+    await deleteDoc(doc(colRef, id));
     setIsRemovingEntry(true);
   };
 
@@ -105,7 +110,7 @@ const SingleCard = ({ entry }: Props) => {
             {!entryEdit && (
               <>
                 <h3 className="text-2xl pr-10 mb-2 font-semibold">
-                  <Link href={`/dashboard/cards/${_id}`}>
+                  <Link href={`/dashboard/cards/${id}`}>
                     <a>{titleValue || title}</a>
                   </Link>
                 </h3>
@@ -193,18 +198,18 @@ const SingleCard = ({ entry }: Props) => {
           </div>
           <p className="hidden">{status}</p>
           <div className="relative mt-5">
-            {/* {!entryEdit && (
-            <>
-              <Link href={`/dashboard/lists/${list}`}>
-                <a className="text-white">
-                  <div className="flex items-center rounded-full bg-slate-500 float-left px-2 py-1">
-                    <IconTag size="30" color="white" />
-                    <span className="mr-2">{listValue || list}</span>
-                  </div>
-                </a>
-              </Link>
-            </>
-          )} */}
+            {!entryEdit && (
+              <>
+                <Link href={`/dashboard/lists/${list}`}>
+                  <a className="text-white">
+                    <div className="flex items-center rounded-full bg-slate-500 float-left px-2 py-1">
+                      <IconTag size="30" color="white" />
+                      <span className="mr-2">{listValue || list}</span>
+                    </div>
+                  </a>
+                </Link>
+              </>
+            )}
             {entryEdit && (
               <select
                 className="px-4 py-3 w-full"
@@ -213,8 +218,8 @@ const SingleCard = ({ entry }: Props) => {
                 id="lists"
                 value={listValue || list}
               >
-                {lists.map(({ _id, title, chosenEmoji }) => (
-                  <option className="text-lg" key={_id} value={title}>
+                {lists.map(({ id, title, chosenEmoji }) => (
+                  <option className="text-lg" key={id} value={title}>
                     {chosenEmoji} {title}
                   </option>
                 ))}

@@ -6,7 +6,7 @@ interface Props {
 export const suggestCards: Props = {
   cards: [
     {
-      _id: "suggest-card-1",
+      id: "suggest-card-1",
       title: "Pillow",
       description:
         "a rectangular cloth bag filled with soft material, used for resting your head on in bed ",

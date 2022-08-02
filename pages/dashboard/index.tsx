@@ -27,19 +27,9 @@ const DashBoard = () => {
   // };
 
   const onSetPrueba = async () => {
-    await setDoc(doc(db, "usuarios", user.email, "cards", "Card title"), {
+    await addDoc(collection(db, "usuarios", "juanv87@gmail.com", "cards"), {
       title: "",
       description: "",
-      meaning: "",
-      phrase: "",
-      createdAt: "",
-      list: "",
-      fav: "",
-      languaje: "",
-      titleValue: "",
-      imagen: "",
-      memoCount: "",
-      user: "",
     });
   };
 
@@ -69,7 +59,7 @@ const DashBoard = () => {
             <button onClick={onSendWord}>Select</button>
             <ul>
               {suggestCards.cards.map((entry) => {
-                return <SingleCard key={entry._id} entry={entry} />;
+                return <SingleCard key={entry.id} entry={entry} />;
               })}
             </ul>
             <ul>

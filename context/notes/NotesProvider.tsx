@@ -35,15 +35,15 @@ export const NotesProvider = ({ children }: any) => {
   };
 
   const updateNote = async ({
-    _id,
+    id,
     title,
     description,
     content,
     list,
   }: Note) => {
     try {
-      const { data } = await notesApi.put<Note>(`/notes/${_id}`, {
-        _id,
+      const { data } = await notesApi.put<Note>(`/notes/${id}`, {
+        id,
         title,
         description,
         content,

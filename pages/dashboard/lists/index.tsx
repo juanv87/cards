@@ -18,7 +18,9 @@ const Lists = () => {
           </div>
         </button>
         {addList && <AddList />}
-        <div className="flex">{/* <ListsList status="publish" /> */}</div>
+        <div className="flex">
+          <ListsList />
+        </div>
       </ContainerDashBoard>
     </>
   );

@@ -12,7 +12,7 @@ const NotesList: FC = () => {
     <>
       <div className="grid grid-cols-12 gap-5 w-full">
         {notes.map((notes) => (
-          <div key={notes._id} className="col-span-3 mt-8">
+          <div key={notes.id} className="col-span-3 mt-8">
             <SingleNote note={notes} />
           </div>
         ))}

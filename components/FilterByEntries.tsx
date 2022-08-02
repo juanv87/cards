@@ -32,7 +32,7 @@ const FilterByEntries = ({ entries }: Props) => {
       />
       <div className="grid grid-cols-12 gap-5 w-full">
         {entriesFiltered.map((entry) => (
-          <div key={entry._id} className="col-span-4 mt-8">
+          <div key={entry.id} className="col-span-4 mt-8">
             <SingleCard entry={entry} />
           </div>
         ))}
