@@ -10,6 +10,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const { signUp } = useAuth();
@@ -25,14 +26,14 @@ const Register = () => {
     try {
       setLoading(true);
       await signUp(user.email, user.password);
-      await setDoc(doc(db, "usuarios", user.email), {
+      await setDoc(doc(db, "usuarios", user.email.split("@")[0]), {
         name: user.email.split("@")[0],
         email: user.email,
         password: user.password,
         createdAt: new Date(),
         avatar: "",
       });
-      await addDoc(collection(db, "usuarios", user.email, "lists"), {
+      await addDoc(collection(db, "usuarios", user.email.split("@")[0], "lists"), {
         description: "",
         title: "",
         createdAt: "",
@@ -42,7 +43,7 @@ const Register = () => {
         pinned: "",
       });
       setLoading(false);
-      Router.push("/dashboard");
+      Router.push("/" + user.email.split("@")[0]);
     } catch (error: any) {
       setLoading(false);
       if (error.code === "auth/internal-error") {

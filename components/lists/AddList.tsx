@@ -33,7 +33,10 @@ const AddList = () => {
   const onSave = async () => {
     if (titleValue.length === 0) return;
     setPinnedValue(false);
-    await setDoc(doc(db, "usuarios", user.email, "lists", titleValue), {
+    await setDoc(doc(db, "usuarios", user.email.split("@")[0], "lists", titleValue
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, ""),), {
       title: titleValue,
       description: descValue,
       titleSlug: titleValue
@@ -44,7 +47,10 @@ const AddList = () => {
       pinnedValue,
     });
     await addDoc(
-      collection(db, "usuarios", user.email, "lists", titleValue, "cards"),
+      collection(db, "usuarios", user.email.split("@")[0], "lists", titleValue
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, ""), "cards"),
       {
         title: "",
         description: "",

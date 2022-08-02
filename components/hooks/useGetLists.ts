@@ -19,7 +19,6 @@ const useGetLists = () => {
   };
   useEffect(() => {
     getLists();
-    console.log("useGetLists", lists);
   }, [user]);
   return { lists, loadingLists };
 };
