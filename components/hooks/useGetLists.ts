@@ -3,15 +3,14 @@ import { useEffect, useState } from "react";
 import { db } from "../../lib/firebase/firebase";
 import { useAuth } from "./useAuth";
 
-const useGetLists = () => {
+const useGetLists = (userName: string) => {
   const { user } = useAuth();
-  const emailUser = user && user.email;
   const [lists, setLists] = useState([]);
   const [loadingLists, setLoadingLists] = useState(true);
   const getLists = async () => {
     if (user) {
       setLoadingLists(true);
-      const colRef = collection(db, "usuarios", emailUser, "lists");
+      const colRef = collection(db, "usuarios", userName, "lists");
       const data = await getDocs(colRef);
       setLists(user && data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoadingLists(false);
