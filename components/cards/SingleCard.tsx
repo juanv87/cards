@@ -14,6 +14,7 @@ import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
 import { db } from "../../lib/firebase/firebase";
 import Definitions from "../Definitions";
+import useGetLists from "../hooks/useGetLists";
 import IconBtnSave from "../icons/IconBtnSave";
 import IconDelete from "../icons/IconDelete";
 import IconEdit from "../icons/IconEdit";
@@ -30,6 +31,7 @@ const SingleCard = ({ entry }: Props) => {
   console.log(entry);
 
   const { user } = useContext(authContext);
+  const userName = user && user.email.split("@")[0];
 
   const [entryEdit, setEntryEdit] = useState(false);
   const [titleValue, settitleValue] = useState("");
@@ -95,12 +97,22 @@ const SingleCard = ({ entry }: Props) => {
   };
 
   const onEntryDelete = async () => {
-    const colRef = collection(db, "usuarios", "juanv87@gmail.com", "general");
-    await deleteDoc(doc(colRef, id));
+    const colRef = collection(
+      db,
+      "usuarios",
+      userName,
+      "lists",
+      list
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, ""),
+      "cards"
+    );
+    await deleteDoc(doc(colRef, title));
     setIsRemovingEntry(true);
   };
 
-  const { lists } = useContext(ListsContext);
+  const { lists, loadingLists } = useGetLists(userName);
 
   return (
     <>

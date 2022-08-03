@@ -41,12 +41,6 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
           </div>
         </li>
         <li>
-          <div className="flex items-center gap-2">
-            <IconListsMenu size={showMenu ? "30" : "40"} />
-            <Link href="/dashboard/lists">
-              <a className={`text-lg ${!showMenu && "hidden"}`}>Lists</a>
-            </Link>
-          </div>
           {showItems && (
             <ul>
               {lists.length === 0 ? (
@@ -99,14 +93,14 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
             </Link>
           </div>
         </li> */}
-        <li>
+        {/* <li>
           <div className="flex items-center gap-2">
             <IconFavMenu size={showMenu ? "30" : "40"} />
             <Link href={`/${userName}/favs`}>
               <a className={`text-lg ${!showMenu && "hidden"}`}>Favs</a>
             </Link>
           </div>
-        </li>
+        </li> */}
       </ul>
       <style jsx>{`
         ul {
