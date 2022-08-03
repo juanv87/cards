@@ -30,22 +30,13 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface Props {
   list: List;
-  cards: Entry;
+  cards: Entry[];
 }
 
-const SingleListPage = ({ notesByList, cards, list }: Props) => {
-  // todo: traer listas filtradas por el id
-
-  console.log("cards", cards);
-
-  const { title, slugTitleValue, chosenEmoji, description } = list;
+const SingleListPage = ({ cards, list }: Props) => {
+  const { title, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
-  // const { entries } = useContext(EntriesContext);
-  // const entryBySlug = useMemo(
-  //   () => entries.filter(({ list }) => list === title),
-  //   [entries]
-  // );
 
   return (
     <>
@@ -108,17 +99,15 @@ const SingleListPage = ({ notesByList, cards, list }: Props) => {
         )}
         */}
 
-        {cards.length > 0 && (
-          <div className="grid grid-cols-12 gap-5 mt-8 w-full">
-            {cards
-              .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
-              .map((entry: Entry) => (
-                <div key={entry.id} className="col-span-4">
-                  <SingleCard entry={entry} />
-                </div>
-              ))}
-          </div>
-        )}
+        <div className="grid grid-cols-12 gap-5 mt-8 w-full">
+          {cards
+            .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
+            .map((entry: Entry) => (
+              <div key={entry.id} className="col-span-4">
+                <SingleCard entry={entry} />
+              </div>
+            ))}
+        </div>
       </ContainerDashBoard>
     </>
   );
@@ -128,8 +117,6 @@ export default SingleListPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { name, id } = params as { name: string; id: string };
-
-  console.log(params);
 
   const colRef = collection(db, "usuarios", name, "lists", id, "cards");
   const result = await getDocs(colRef);

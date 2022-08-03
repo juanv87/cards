@@ -6,10 +6,14 @@ import AddList from "../../../components/lists/AddList";
 import ListsList from "../../../components/lists/ListsList";
 import { GetServerSideProps } from "next";
 import { collection, getDocs } from "firebase/firestore";
-import { Entry } from "../../../interfaces";
+import { Entry, List } from "../../../interfaces";
 import { db } from "../../../lib/firebase/firebase";
 
-const Lists = ({ lists }) => {
+interface Props {
+  lists: List[];
+}
+
+const Lists = ({ lists }: Props) => {
   const [addList, setAddList] = useState(false);
   return (
     <>
