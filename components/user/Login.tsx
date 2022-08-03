@@ -21,7 +21,7 @@ const Login = () => {
     setError("");
     try {
       await logIn(user.email, user.password);
-      Router.push("/dashboard");
+      Router.push("/" + user.email.split("@")[0]);
     } catch (error: any) {
       if (error.code === "auth/user-not-found") {
         setError("😳 Cuenta no encontrada");

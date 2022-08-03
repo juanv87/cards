@@ -73,7 +73,12 @@ const AddCard = ({ currentList }: Props) => {
   const getData = async () => {
     if (user) {
       setLoadingCards(true);
-      const colRef = collection(db, "usuarios", user.email.split("@")[0], "lists");
+      const colRef = collection(
+        db,
+        "usuarios",
+        user.email.split("@")[0],
+        "lists"
+      );
       const data = await getDocs(colRef);
       setLists(user && data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setLoadingCards(false);
@@ -87,7 +92,18 @@ const AddCard = ({ currentList }: Props) => {
   const onSave = async () => {
     if (titleValue.length === 0) return;
     await setDoc(
-      doc(db, "usuarios", user.email.split("@")[0], "lists", listValue, "cards", titleValue),
+      doc(
+        db,
+        "usuarios",
+        user.email.split("@")[0],
+        "lists",
+        listValue
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, ""),
+        "cards",
+        titleValue
+      ),
       {
         title: titleValue,
         description: descValue,
