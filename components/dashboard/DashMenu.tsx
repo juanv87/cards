@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useContext, useRef, useState } from "react";
 import { ListsContext } from "../../context/lists";
 import { NotesContext } from "../../context/notes";
+import { useAuth } from "../hooks/useAuth";
 import IconFavMenu from "../icons/IconFavMenu";
 import IconListCardsMenu from "../icons/IconListCardsMenu";
 import IconListsMenu from "../icons/IconListsMenu";
@@ -13,37 +14,40 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
   // const { lists } = useContext(ListsContext);
   // const { notes } = useContext(NotesContext);
 
+  const { user } = useAuth();
+  const userName = user && user.email.split("@")[0];
+
   return (
     <>
       <ul>
-        <li>
+        {/* <li>
           <div className="flex items-center gap-2">
             <IconListCardsMenu size={showMenu ? "30" : "40"} />
-            <Link href="/dashboard/cards">
+            <Link href={`/${userName}/cards`}>
               <a className={`text-lg ${!showMenu && "hidden"}`}>Cards</a>
             </Link>
           </div>
-        </li>
+        </li> */}
         <li>
           <div className="flex items-center gap-2">
             <IconListsMenu size={showMenu ? "30" : "40"} />
-            <Link href="/dashboard/lists">
+            <Link href={`/${userName}/lists`}>
               <a className={`text-lg ${!showMenu && "hidden"}`}>Lists</a>
             </Link>
           </div>
         </li>
-        <li>
+        {/* <li>
           <div className="flex items-center gap-2">
             <IconNote size={showMenu ? "30" : "40"} />
-            <Link href="/dashboard/notes">
+            <Link href={`/${userName}/notes`}>
               <a className={`text-lg ${!showMenu && "hidden"}`}>Notes</a>
             </Link>
           </div>
-        </li>
+        </li> */}
         <li>
           <div className="flex items-center gap-2">
             <IconFavMenu size={showMenu ? "30" : "40"} />
-            <Link href="/dashboard/favs">
+            <Link href={`/${userName}/favs`}>
               <a className={`text-lg ${!showMenu && "hidden"}`}>Favs</a>
             </Link>
           </div>

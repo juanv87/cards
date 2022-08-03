@@ -37,7 +37,7 @@ const SingleListPage = ({ cards, list }: Props) => {
   const { title, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
-
+  const [showQuizz, setShowQuizz] = useState(false);
   return (
     <>
       <Header />
@@ -76,18 +76,25 @@ const SingleListPage = ({ cards, list }: Props) => {
             />
           )}
         </div>
-        {/* 
         {addCard && <AddCard currentList={title} />}
-        {addNote && <AddNote currentList={title} />}
-        {entryBySlug.length > 0 && (
+        {/* {addNote && <AddNote currentList={title} />} */}
+        <button className="" onClick={() => setShowQuizz(!showQuizz)}>
+          Show Quizzes
+        </button>
+        {cards.length > 0 && (
           <div className="flex gap-5">
-            <SingleCardQuizNote listSlug={title} list={title} />
-            <SingleCardQuiz listSlug={title} entries={entries} />
-            <SingleCardQuizWithDesc listSlug={title} entries={entries} />
-            <SingleCardQuizES listSlug={title} entries={entries} />
-            <SingleCardQuizWithImage listSlug={title} entries={entries} />
+            {/* <SingleCardQuizNote listSlug={title} list={title} /> */}
+            {showQuizz && (
+              <>
+                <SingleCardQuiz listSlug={title} entries={cards} />
+                <SingleCardQuizWithDesc listSlug={title} entries={cards} />
+                <SingleCardQuizES listSlug={title} entries={cards} />
+              </>
+            )}
+            {/* <SingleCardQuizWithImage listSlug={title} entries={cards} /> */}
           </div>
         )}
+        {/* 
         {notesByList.length > 0 && (
           <div className="grid grid-cols-12 gap-5 mt-8 w-full">
             {notesByList.map((entry) => (
