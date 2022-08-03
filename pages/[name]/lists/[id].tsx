@@ -30,15 +30,15 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface Props {
   list: List;
-  notesByList: Note[];
+  cards: Entry;
 }
 
-const SingleListPage = ({ notesByList, cards }: any) => {
+const SingleListPage = ({ notesByList, cards, list }: Props) => {
   // todo: traer listas filtradas por el id
 
   console.log("cards", cards);
 
-  const { title, slugTitleValue, chosenEmoji, description } = cards;
+  const { title, slugTitleValue, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
   // const { entries } = useContext(EntriesContext);
@@ -112,7 +112,7 @@ const SingleListPage = ({ notesByList, cards }: any) => {
           <div className="grid grid-cols-12 gap-5 mt-8 w-full">
             {cards
               .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
-              .map((entry) => (
+              .map((entry: Entry) => (
                 <div key={entry.id} className="col-span-4">
                   <SingleCard entry={entry} />
                 </div>
@@ -138,6 +138,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     (doc) => ({ ...doc.data(), id: doc.id } as Entry)
   );
 
+  const colRefList = collection(db, "usuarios", name, "lists");
+  const resultList = await getDoc(doc(colRefList, id));
+
+  const list = resultList.data();
+
   // if (!list) {
   //   return {
   //     redirect: {
@@ -153,6 +158,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     props: {
       // notesByList,
       cards,
+      list,
     },
   };
 };
