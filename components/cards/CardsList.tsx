@@ -14,8 +14,9 @@ import useGetLists from "../hooks/useGetLists";
 
 const CardsList: FC = () => {
   // const { entries } = useContext(EntriesContext);
-
-  const { lists, loadingLists } = useGetLists();
+  const { user } = useAuth();
+  const userName = user && user.email.split("@")[0];
+  const { lists, loadingLists } = useGetLists(userName);
 
   return (
     <>
