@@ -25,6 +25,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
+import setNewCard from "../../services/setNewCard";
 interface Props {
   currentList?: string;
 }
@@ -32,6 +33,7 @@ const AddCard = ({ currentList }: Props) => {
   const { user } = useContext(authContext);
   const emailUser = user && user.email;
   const [loadingCards, setLoadingCards] = useState(true);
+  const [loadingSetCards, setLoadingSetCards] = useState(false);
   const [cards, setCards] = useState([]);
 
   const { addNewEntry } = useContext(EntriesContext);
@@ -91,36 +93,19 @@ const AddCard = ({ currentList }: Props) => {
 
   const onSave = async () => {
     if (titleValue.length === 0) return;
-    await setDoc(
-      doc(
-        db,
-        "usuarios",
-        user.email.split("@")[0],
-        "lists",
-        listValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-        "cards",
-        titleValue
-      ),
-      {
-        title: titleValue,
-        description: descValue,
-        meaning: meaningValue,
-        phrase: phraseValue,
-        list: listValue,
-        fav: favValue,
-        languaje: languajeValue,
-        slugTitleValue: titleValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-        imagen: imagenValue,
-        memoCount: 0,
-        userId: user.email.split("@")[0],
-      }
-    );
+    setLoadingSetCards(true);
+    await setNewCard({
+      titleValue,
+      userId: user.email.split("@")[0],
+      descValue,
+      listValue,
+      meaningValue,
+      phraseValue,
+      favValue: false,
+      languajeValue,
+      imagenValue,
+    });
+    setLoadingSetCards(false);
     settitleValue("");
     setMeaningValue("");
     setPhraseValue("");
@@ -135,8 +120,13 @@ const AddCard = ({ currentList }: Props) => {
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-5">
-        <div className="grid gap-2 col-span-4 mt-5">
+      <div className="grid grid-cols-12 gap-5 ">
+        <div className="grid gap-2 col-span-4 mt-5 relative">
+          {loadingSetCards && (
+            <div className="absolute top-0 left-0 w-full h-full opacity-75 animate-pulse bg-white z-50 flex justify-center items-center">
+              Cargando...
+            </div>
+          )}
           <div className="flex gap-3 items-center">
             <input
               value={titleValue}

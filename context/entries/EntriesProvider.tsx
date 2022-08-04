@@ -7,7 +7,7 @@ import { Entry, EntryStatus } from "../../interfaces";
 import { entriesApi } from "../../api";
 
 import { EntriesContext, entriesReducer } from "./";
-import { collection, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
 
 export interface EntriesState {

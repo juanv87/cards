@@ -7,17 +7,17 @@ import { Editor } from "@tinymce/tinymce-react";
 import { authContext } from "../../context/authContext";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
+import setNewList from "../../services/setNewList";
 
 const AddList = () => {
   const { user } = useContext(authContext);
 
-  const { addNewList } = useContext(ListsContext);
   const [titleValue, settitleValue] = useState("");
   const [descValue, setDescValue] = useState("");
-  const [touched, setTouched] = useState(false);
-  const [statusValue, setStatusValue] = useState("publish");
   const [chosenEmoji, setChosenEmoji] = useState("");
   const [pinnedValue, setPinnedValue] = useState(false);
+
+  const [loadingNewList, setLoadingNewList] = useState(false);
 
   const onEmojiClick = (event: ChangeEvent<HTMLSelectElement>) => {
     setChosenEmoji(event.target.value);
@@ -30,67 +30,32 @@ const AddList = () => {
   const onDescFieldChanges = (content: any) => {
     setDescValue(content);
   };
+
+  // Todo: Pasar funcion a context
   const onSave = async () => {
+    setLoadingNewList(true);
     if (titleValue.length === 0) return;
     setPinnedValue(false);
-    await setDoc(
-      doc(
-        db,
-        "usuarios",
-        user.email.split("@")[0],
-        "lists",
-        titleValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, "")
-      ),
-      {
-        title: titleValue,
-        description: descValue,
-        titleSlug: titleValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-        chosenEmoji,
-        pinnedValue,
-        userId: user.email.split("@")[0],
-      }
-    );
-    await addDoc(
-      collection(
-        db,
-        "usuarios",
-        user.email.split("@")[0],
-        "lists",
-        titleValue
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-        "cards"
-      ),
-      {
-        title: "",
-        description: "",
-        meaning: "",
-        phrase: "",
-        list: "",
-        fav: "",
-        languaje: "",
-        slugTitleValue: "",
-        imagen: "",
-        memoCount: "",
-        userId: "",
-      }
-    );
-
-    setTouched(false);
+    await setNewList({
+      titleValue,
+      userId: user.email.split("@")[0],
+      descValue,
+      chosenEmoji,
+      pinnedValue,
+    });
+    setLoadingNewList(false);
     settitleValue("");
     setDescValue("");
   };
   return (
     <>
       <div className="flex">
-        <div className="grid gap-2 w-1/2 mt-5">
+        <div className="grid gap-2 w-1/2 mt-5 relative">
+          {loadingNewList && (
+            <div className="absolute top-0 left-0 w-full h-full opacity-75 animate-pulse bg-white z-50 flex justify-center items-center">
+              Cargando...
+            </div>
+          )}
           <input
             value={titleValue}
             type="text"
