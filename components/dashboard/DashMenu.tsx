@@ -55,24 +55,28 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
                   .map(({ title, id, chosenEmoji, pinned }) => (
                     <li key={id}>
                       <div className="flex items-center gap-1 justify-between">
-                        <a className="flex" href={`/${userName}/lists/${id}`}>
-                          {chosenEmoji ? (
+                        <Link href={`/${userName}/lists/${id}`}>
+                          <a className="flex">
+                            {chosenEmoji ? (
+                              <span
+                                className={showMenu ? "text-base" : "text-xl"}
+                              >
+                                {chosenEmoji}
+                              </span>
+                            ) : (
+                              <IconSingleListMenu
+                                size={showMenu ? "25" : "30"}
+                              />
+                            )}
                             <span
-                              className={showMenu ? "text-base" : "text-xl"}
+                              className={`text-base ml-2 ${
+                                !showMenu && "hidden"
+                              } `}
                             >
-                              {chosenEmoji}
+                              {title}
                             </span>
-                          ) : (
-                            <IconSingleListMenu size={showMenu ? "25" : "30"} />
-                          )}
-                          <span
-                            className={`text-base ml-2 ${
-                              !showMenu && "hidden"
-                            } `}
-                          >
-                            {title}
-                          </span>
-                        </a>
+                          </a>
+                        </Link>
                         {pinned && (
                           <>
                             <div className="mr-3 text-sm opacity-50">📌</div>

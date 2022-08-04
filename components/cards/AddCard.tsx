@@ -118,7 +118,7 @@ const AddCard = ({ currentList }: Props) => {
           .replace(/[^\w-]+/g, ""),
         imagen: imagenValue,
         memoCount: 0,
-        userId: user.uid,
+        userId: user.email.split("@")[0],
       }
     );
     settitleValue("");

@@ -74,6 +74,8 @@ const SingleCard = ({ entry }: Props) => {
     id,
     memoCount,
     imagen,
+    slugTitleValue,
+    userId,
   } = entry;
   const { updateEntry, deleteEntry, deleteCard } = useContext(EntriesContext);
   const newEntryUpdate = {
@@ -122,7 +124,7 @@ const SingleCard = ({ entry }: Props) => {
             {!entryEdit && (
               <>
                 <h3 className="text-2xl pr-10 mb-2 font-semibold">
-                  <Link href={`/dashboard/cards/${id}`}>
+                  <Link href={`/${userId}/cards/${slugTitleValue}`}>
                     <a>{titleValue || title}</a>
                   </Link>
                 </h3>
@@ -210,18 +212,6 @@ const SingleCard = ({ entry }: Props) => {
           </div>
           <p className="hidden">{status}</p>
           <div className="relative mt-5">
-            {!entryEdit && (
-              <>
-                <Link href={`/dashboard/lists/${list}`}>
-                  <a className="text-white">
-                    <div className="flex items-center rounded-full bg-slate-500 float-left px-2 py-1">
-                      <IconTag size="30" color="white" />
-                      <span className="mr-2">{listValue || list}</span>
-                    </div>
-                  </a>
-                </Link>
-              </>
-            )}
             {entryEdit && (
               <select
                 className="px-4 py-3 w-full"

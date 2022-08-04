@@ -9,16 +9,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { ContainerBtnSave } from "../layouts/ContainerBtnSave";
 import { ContainerBtnCancel } from "../layouts/ContainerBtnCancel";
 import IconBtnSave from "../icons/IconBtnSave";
-import { useAuth } from "../hooks/useAuth";
+
 interface Props {
   list: List;
 }
 const SingleList = ({ list }: Props) => {
-  const { user } = useAuth();
-
-  const userName = user && user.email.split("@")[0];
-
-  const { title, description, slugTitleValue, chosenEmoji, pinned } = list;
+  const { title, description, slugTitleValue, chosenEmoji, pinned, userId } =
+    list;
 
   const [listEdit, setListEdit] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
@@ -72,7 +69,7 @@ const SingleList = ({ list }: Props) => {
           <h3 className="text-2xl flex gap-1 mb-2">
             {!listEdit && (emojiValue || chosenEmoji)}
 
-            <Link href={`/${userName}/lists/${list.id}`}>
+            <Link href={`/${userId}/lists/${list.id}`}>
               <a>{titleValue || title}</a>
             </Link>
           </h3>

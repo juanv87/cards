@@ -33,24 +33,41 @@ const AddList = () => {
   const onSave = async () => {
     if (titleValue.length === 0) return;
     setPinnedValue(false);
-    await setDoc(doc(db, "usuarios", user.email.split("@")[0], "lists", titleValue
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, ""),), {
-      title: titleValue,
-      description: descValue,
-      titleSlug: titleValue
-        .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, ""),
-      chosenEmoji,
-      pinnedValue,
-    });
+    await setDoc(
+      doc(
+        db,
+        "usuarios",
+        user.email.split("@")[0],
+        "lists",
+        titleValue
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, "")
+      ),
+      {
+        title: titleValue,
+        description: descValue,
+        titleSlug: titleValue
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, ""),
+        chosenEmoji,
+        pinnedValue,
+        userId: user.email.split("@")[0],
+      }
+    );
     await addDoc(
-      collection(db, "usuarios", user.email.split("@")[0], "lists", titleValue
-      .toLowerCase()
-      .replace(/ /g, "-")
-      .replace(/[^\w-]+/g, ""), "cards"),
+      collection(
+        db,
+        "usuarios",
+        user.email.split("@")[0],
+        "lists",
+        titleValue
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, ""),
+        "cards"
+      ),
       {
         title: "",
         description: "",

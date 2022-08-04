@@ -64,7 +64,7 @@ export const EntriesProvider: any = ({ children }: any) => {
     languaje,
     imagen,
     memoCount,
-    user,
+    userId,
   }: Entry) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${id}`, {
@@ -79,7 +79,7 @@ export const EntriesProvider: any = ({ children }: any) => {
         languaje,
         imagen,
         memoCount,
-        user,
+        userId,
       });
       dispatch({ type: "[Entry] Entry-Updated", payload: data });
     } catch (error) {
