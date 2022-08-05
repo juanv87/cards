@@ -13,6 +13,8 @@ import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
 import { db } from "../../lib/firebase/firebase";
+import setNewCard from "../../services/setNewCard";
+import updateCard from "../../services/updateCard";
 import Definitions from "../Definitions";
 import useGetLists from "../hooks/useGetLists";
 import IconBtnSave from "../icons/IconBtnSave";
@@ -28,8 +30,6 @@ interface Props {
   entry: Entry;
 }
 const SingleCard = ({ entry }: Props) => {
-  console.log(entry);
-
   const { user } = useContext(authContext);
   const userName = user && user.email.split("@")[0];
 
@@ -89,8 +89,20 @@ const SingleCard = ({ entry }: Props) => {
     user: user?.uid,
   };
 
-  const onUpdate = () => {
-    updateEntry(newEntryUpdate);
+  const onUpdate = async () => {
+    await updateCard({
+      idCard: title,
+      idList: list,
+      titleValue: titleValue || title,
+      userId: user.email.split("@")[0],
+      descValue: descValue || description,
+      listValue: listValue || list,
+      meaningValue: meaningValue || meaning,
+      phraseValue: phraseValue || phrase,
+      languajeValue: languaje || "",
+      favValue: fav,
+      imagenValue: imagenValue || imagen,
+    });
     setEntryEdit(false);
   };
 

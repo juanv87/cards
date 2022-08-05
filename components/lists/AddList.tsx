@@ -33,8 +33,8 @@ const AddList = () => {
 
   // Todo: Pasar funcion a context
   const onSave = async () => {
-    setLoadingNewList(true);
     if (titleValue.length === 0) return;
+    setLoadingNewList(true);
     setPinnedValue(false);
     await setNewList({
       titleValue,
