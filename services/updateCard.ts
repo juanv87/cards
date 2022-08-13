@@ -21,6 +21,7 @@ interface Props {
   favValue?: boolean;
   languajeValue?: string;
   imagenValue?: string;
+  setCardExists: (value: boolean) => void;
 }
 
 const updateCard = async ({
@@ -35,6 +36,7 @@ const updateCard = async ({
   favValue,
   languajeValue,
   imagenValue,
+  setCardExists,
 }: Props) => {
   if (idList !== listValue) {
     const colRef = collection(
@@ -79,17 +81,8 @@ const updateCard = async ({
         userId: userId,
       }
     );
+    setCardExists(false);
   } else {
-    console.log(
-      "idList",
-      idList,
-      "listValue",
-      listValue,
-      "titleValue",
-      titleValue,
-      "idCard",
-      idCard
-    );
     const colRef = collection(
       db,
       "usuarios",

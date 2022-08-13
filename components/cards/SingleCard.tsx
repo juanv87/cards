@@ -57,7 +57,8 @@ const SingleCard = ({ entry }: Props) => {
   const [listValue, setListValue] = useState(list);
   const [viewDefinitions, setViewDefinitions] = useState(false);
   const [imagenValue, setImagenValue] = useState(imagen);
-  const [isRemovingEntry, setIsRemovingEntry] = useState(false);
+  const [isLoadingCard, setIsLoadingCard] = useState(false);
+  const [cardExists, setCardExists] = useState(true);
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
     settitleValue(event.target.value);
@@ -78,19 +79,20 @@ const SingleCard = ({ entry }: Props) => {
     setImagenValue(event.target.value);
   };
 
-  const { updateEntry, deleteEntry, deleteCard } = useContext(EntriesContext);
-  const newEntryUpdate = {
-    ...entry,
-    title: titleValue !== "" ? titleValue : title,
-    description: descValue !== "" ? descValue : description,
-    phrase: phraseValue !== "" ? phraseValue : phrase,
-    meaning: meaningValue !== "" ? meaningValue : meaning,
-    list: listValue !== "" ? listValue : list,
-    imagen: imagenValue || imagen,
-    user: user?.uid,
-  };
+  // const { updateEntry, deleteEntry, deleteCard } = useContext(EntriesContext);
+  // const newEntryUpdate = {
+  //   ...entry,
+  //   title: titleValue !== "" ? titleValue : title,
+  //   description: descValue !== "" ? descValue : description,
+  //   phrase: phraseValue !== "" ? phraseValue : phrase,
+  //   meaning: meaningValue !== "" ? meaningValue : meaning,
+  //   list: listValue !== "" ? listValue : list,
+  //   imagen: imagenValue || imagen,
+  //   user: user?.uid,
+  // };
 
   const onUpdate = async () => {
+    setIsLoadingCard(true);
     await updateCard({
       idCard: title,
       idList: list,
@@ -103,8 +105,10 @@ const SingleCard = ({ entry }: Props) => {
       languajeValue: languaje || "",
       favValue: fav,
       imagenValue: imagenValue || imagen,
+      setCardExists,
     });
     setEntryEdit(false);
+    setIsLoadingCard(false);
   };
 
   const onEntryEdit = () => {
@@ -112,6 +116,7 @@ const SingleCard = ({ entry }: Props) => {
   };
 
   const onEntryDelete = async () => {
+    setIsLoadingCard(true);
     const colRef = collection(
       db,
       "usuarios",
@@ -124,14 +129,19 @@ const SingleCard = ({ entry }: Props) => {
       "cards"
     );
     await deleteDoc(doc(colRef, title));
+    setIsLoadingCard(false);
+    setCardExists(false);
   };
 
   const { lists, loadingLists } = useGetLists(userName);
 
   return (
-    <>
-      {!isRemovingEntry && (
-        <ContainerCard>
+    cardExists && (
+      <>
+        <div className="bg-white border-t-8 shadow-xl hover:border-gray-300 border-gray-200 p-5 rounded-lg relative">
+          {isLoadingCard && (
+            <div className="absolute | left-0 top-0 | w-full h-full | z-10 | animate-pulse | bg-slate-200"></div>
+          )}
           <div className="relative">
             {!entryEdit && (
               <>
@@ -243,21 +253,21 @@ const SingleCard = ({ entry }: Props) => {
           <p className="hidden">languaje: {languaje}</p> <br />
           {fav && "Favorita"}
           {!entryEdit && (
-            <button
-              className="ml-5 text-sm absolute right-5 top-5"
-              onClick={onEntryEdit}
-            >
-              <IconEdit />
-            </button>
+            <>
+              <button
+                className="ml-5 text-sm absolute right-5 top-5"
+                onClick={onEntryEdit}
+              >
+                <IconEdit />
+              </button>
+              <button
+                className="ml-5 text-sm absolute right-10 top-5"
+                onClick={onEntryDelete}
+              >
+                <IconDelete />
+              </button>
+            </>
           )}
-          {
-            <button
-              className="ml-5 text-sm absolute right-10 top-5"
-              onClick={onEntryDelete}
-            >
-              <IconDelete />
-            </button>
-          }
           {memoCount}
           <div className="text-center">
             {imagenValue || imagen ? (
@@ -305,9 +315,9 @@ const SingleCard = ({ entry }: Props) => {
               </div>
             </>
           )}
-        </ContainerCard>
-      )}
-    </>
+        </div>
+      </>
+    )
   );
 };
 export default SingleCard;
