@@ -80,6 +80,16 @@ const updateCard = async ({
       }
     );
   } else {
+    console.log(
+      "idList",
+      idList,
+      "listValue",
+      listValue,
+      "titleValue",
+      titleValue,
+      "idCard",
+      idCard
+    );
     const colRef = collection(
       db,
       "usuarios",

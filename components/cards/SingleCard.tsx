@@ -33,14 +33,30 @@ const SingleCard = ({ entry }: Props) => {
   const { user } = useContext(authContext);
   const userName = user && user.email.split("@")[0];
 
+  const {
+    title,
+    meaning,
+    phrase,
+    description,
+    status,
+    list,
+    fav,
+    languaje,
+    id,
+    memoCount,
+    imagen,
+    slugTitleValue,
+    userId,
+  } = entry;
+
   const [entryEdit, setEntryEdit] = useState(false);
-  const [titleValue, settitleValue] = useState("");
-  const [descValue, setDescValue] = useState("");
-  const [phraseValue, setPhraseValue] = useState("");
-  const [meaningValue, setMeaningValue] = useState("");
-  const [listValue, setListValue] = useState("");
+  const [titleValue, settitleValue] = useState(title);
+  const [descValue, setDescValue] = useState(description);
+  const [phraseValue, setPhraseValue] = useState(phrase);
+  const [meaningValue, setMeaningValue] = useState(meaning);
+  const [listValue, setListValue] = useState(list);
   const [viewDefinitions, setViewDefinitions] = useState(false);
-  const [imagenValue, setImagenValue] = useState("");
+  const [imagenValue, setImagenValue] = useState(imagen);
   const [isRemovingEntry, setIsRemovingEntry] = useState(false);
 
   const onTitleFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,21 +78,6 @@ const SingleCard = ({ entry }: Props) => {
     setImagenValue(event.target.value);
   };
 
-  const {
-    title,
-    meaning,
-    phrase,
-    description,
-    status,
-    list,
-    fav,
-    languaje,
-    id,
-    memoCount,
-    imagen,
-    slugTitleValue,
-    userId,
-  } = entry;
   const { updateEntry, deleteEntry, deleteCard } = useContext(EntriesContext);
   const newEntryUpdate = {
     ...entry,
@@ -123,7 +124,6 @@ const SingleCard = ({ entry }: Props) => {
       "cards"
     );
     await deleteDoc(doc(colRef, title));
-    setIsRemovingEntry(true);
   };
 
   const { lists, loadingLists } = useGetLists(userName);
@@ -148,13 +148,13 @@ const SingleCard = ({ entry }: Props) => {
             {entryEdit && (
               <div className="mb-2 z-50 ">
                 <input
-                  value={titleValue || title}
+                  value={titleValue}
                   type="text"
                   onChange={onTitleFieldChanges}
                   className="w-full py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
                 />
                 <input
-                  value={meaningValue || meaning}
+                  value={meaningValue}
                   type="text"
                   onChange={onMeaningFieldChanges}
                   className="w-full mt-2 py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
@@ -172,7 +172,7 @@ const SingleCard = ({ entry }: Props) => {
               <>
                 <div className="mb-2">
                   <input
-                    value={descValue || description}
+                    value={descValue}
                     type="text"
                     onChange={onDescFieldChanges}
                     className="w-full py-1 px-1 border-b-2 bg-gray-200 border-none focus-visible:outline-none focus:border-none"
@@ -206,7 +206,7 @@ const SingleCard = ({ entry }: Props) => {
             {entryEdit && (
               <Editor
                 apiKey="urxgaopom4tpzlamq09oxy8hyu0hxifvc57jc0esxnsnbm0y"
-                value={phraseValue || phrase}
+                value={phraseValue}
                 init={{
                   height: 200,
                   menubar: false,
