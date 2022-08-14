@@ -25,7 +25,6 @@ const CardsList: FC = () => {
         {/* <SingleCardQuizOptions entries={entries} entry={randomEntry} /> */}
       </div>
       {/* <FilterByEntries entries={entries} /> */}
-      {console.log(lists)}
       {loadingLists ? (
         "Cargando..."
       ) : lists.length > 0 ? (
