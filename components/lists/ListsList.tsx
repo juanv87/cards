@@ -4,7 +4,7 @@ import SingleList from "./SingleList";
 import { ListsContext } from "../../context/lists/ListsContext";
 import useGetLists from "../hooks/useGetLists";
 
-const ListsList = ({lists}: any) => {
+const ListsList = ({ lists }: any) => {
   return (
     <>
       <div className="grid grid-cols-12 gap-5 w-full">
@@ -15,15 +15,12 @@ const ListsList = ({lists}: any) => {
               <SingleList list={lists} />
             </div>
           ))} */}
-        {!lists
-          ? "Cargando..."
-          : lists.length > 0
-          ? lists?.map((entry: any) => (
-              <div key={entry.id} className="col-span-4 mt-8">
-                <SingleList list={entry} />
-              </div>
-            ))
-          : "No hay cards"}
+        {lists.length > 0 &&
+          lists?.map((entry: any) => (
+            <div key={entry.id} className="col-span-4 mt-8">
+              <SingleList list={entry} />
+            </div>
+          ))}
       </div>
     </>
   );
