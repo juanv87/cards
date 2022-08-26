@@ -19,8 +19,6 @@ export const DashMenu = ({ showItems = true, showMenu = true }) => {
   const userName = user && user.email.split("@")[0];
   const { lists, loadingLists } = useGetLists(userName);
 
-  console.log("DashMenu", lists);
-
   return (
     <>
       <ul>

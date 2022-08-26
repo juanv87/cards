@@ -18,8 +18,6 @@ interface Props {
   list: string;
 }
 const SingleCardQuizNote = ({ listSlug, list }: Props) => {
-  console.log(list);
-
   const [titleValue, settitleValue] = useState("Nueva Quiz");
   const [descValue, setDescValue] = useState("");
   const [contentValue, setContentValue] = useState("");

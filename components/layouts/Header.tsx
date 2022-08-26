@@ -4,7 +4,6 @@ import { Logo } from "../Logo";
 
 export const Header = () => {
   const { user, logOut, loadingUser } = useAuth();
-  console.log("header", user);
   const handleLogOut = async () => {
     await logOut();
     Router.push("/");
@@ -15,7 +14,6 @@ export const Header = () => {
         <Logo />
       </div>
       <div className="col-span-6 text-right text-white">
-        {console.log("user", user)}
         {loadingUser && "Cargando..."}
         {user === null ? "No hay user" : user.email}
         {user && <button onClick={handleLogOut}>Log Out</button>}

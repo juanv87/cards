@@ -53,10 +53,6 @@ const SingleNote = ({ note, currentList }: Props) => {
     setNoteEdit(true);
   };
   const { lists } = useContext(ListsContext);
-
-  {
-    console.log("listvalue", listValue);
-  }
   return (
     <>
       <ContainerCard>

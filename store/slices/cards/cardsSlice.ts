@@ -4,13 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface CardsState {
   page: number;
   cards: any[];
-  loading: boolean;
+  isLoading: boolean;
 }
 
 const initialState: CardsState = {
   page: 0,
   cards: [],
-  loading: false,
+  isLoading: false,
 };
 
 export const cardsSlice = createSlice({
@@ -18,10 +18,10 @@ export const cardsSlice = createSlice({
   initialState,
   reducers: {
     startLoadingCards: (state, action) => {
-      state.loading = true;
+      state.isLoading = true;
     },
     setCards: (state, action: PayloadAction<any>) => {
-      state.loading = false;
+      state.isLoading = false;
       state.cards = action.payload;
     },
   },

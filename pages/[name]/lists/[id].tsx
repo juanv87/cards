@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetServerSideProps } from "next";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import { ContainerDashBoard } from "../../../components/layouts/ContainerDashBoard";
 import { Header } from "../../../components/layouts/Header";
 import { EntriesContext } from "../../../context/entries/EntriesContext";
@@ -27,17 +27,30 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../../lib/firebase/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { getCardsByList } from "../../../store/slices/lists";
 
 interface Props {
   list: List;
   cards: Entry[];
+  name: string;
+  id: string;
 }
 
-const SingleListPage = ({ cards, list }: Props) => {
+const SingleListPage = ({ name, id, list }: Props) => {
   const { title, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
   const [showQuizz, setShowQuizz] = useState(false);
+
+  const { cards = [], isLoading } = useAppSelector((state) => state.cards);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCardsByList(name, id));
+  }, [id]);
+
+  console.log("Cards", cards);
+
   return (
     <>
       <Header />
@@ -81,6 +94,7 @@ const SingleListPage = ({ cards, list }: Props) => {
         <button className="" onClick={() => setShowQuizz(!showQuizz)}>
           Show Quizzes
         </button>
+        {isLoading && <div>Loading...</div>}
         {cards.length > 0 && (
           <div className="flex gap-5">
             {/* <SingleCardQuizNote listSlug={title} list={title} /> */}
@@ -108,7 +122,7 @@ const SingleListPage = ({ cards, list }: Props) => {
 
         <div className="grid grid-cols-12 gap-5 mt-8 w-full">
           {cards
-            .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
+            // .sort((a, b) => (a.memoCount < b.memoCount ? 1 : -1))
             .map((entry: Entry) => (
               <div key={entry.id} className="col-span-4">
                 <SingleCard entry={entry} />
@@ -151,7 +165,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
       // notesByList,
-      cards,
+      // cards,
+      name,
+      id,
       list,
     },
   };

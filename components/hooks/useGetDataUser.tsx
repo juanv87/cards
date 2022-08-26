@@ -9,14 +9,13 @@ const useGetDataUser = (name: string) => {
   const getDataUser = async () => {
     const colRef = collection(db, "usuarios");
     const result = await getDoc(doc(colRef, name));
-    console.log("result", result);
     setDataUser(result.data());
     setLoadingUser(false);
   };
   useEffect(() => {
     getDataUser();
   }, []);
-  return {dataUser, loadingUser};
+  return { dataUser, loadingUser };
 };
 
 export default useGetDataUser;
