@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { List } from "../interfaces";
-import { db } from "../lib/firebase/firebase";
+import { FirebaseDB } from "../lib/firebase/firebase";
 
 interface Props {
   idCard: string;
@@ -40,7 +40,7 @@ const updateCard = async ({
 }: Props) => {
   if (idList !== listValue) {
     const colRef = collection(
-      db,
+      FirebaseDB,
       "usuarios",
       userId,
       "lists",
@@ -53,7 +53,7 @@ const updateCard = async ({
     await deleteDoc(doc(colRef, titleValue));
     await setDoc(
       doc(
-        db,
+        FirebaseDB,
         "usuarios",
         userId,
         "lists",
@@ -84,7 +84,7 @@ const updateCard = async ({
     setCardExists(false);
   } else {
     const colRef = collection(
-      db,
+      FirebaseDB,
       "usuarios",
       userId,
       "lists",
@@ -97,7 +97,7 @@ const updateCard = async ({
     await deleteDoc(doc(colRef, idCard));
     await setDoc(
       doc(
-        db,
+        FirebaseDB,
         "usuarios",
         userId,
         "lists",
@@ -129,7 +129,7 @@ const updateCard = async ({
 
   // if (idList !== listValue) {
   //   const colRef = collection(
-  //     db,
+  //     FirebaseDB,
   //     "usuarios",
   //     userId,
   //     "lists",

@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth, db } from "../lib/firebase/firebase";
+import { FirebaseAuth, FirebaseDB } from "../lib/firebase/firebase";
 import { doc, documentId, setDoc } from "firebase/firestore";
 export const authContext = createContext(null as any);
 
@@ -14,17 +14,17 @@ export function AuthProvider({ children }: any) {
   const [loadingUser, setLoadingUser] = useState(false);
 
   const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(FirebaseAuth, email, password);
   };
   const logIn = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(FirebaseAuth, email, password);
   };
 
-  const logOut = () => signOut(auth);
+  const logOut = () => signOut(FirebaseAuth);
 
   useEffect(() => {
     setLoadingUser(true);
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(FirebaseAuth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         setLoadingUser(false);

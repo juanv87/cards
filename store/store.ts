@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { counterSlice, cardSlice } from "./slices/counter";
 import { cardsSlice } from "./slices/cards";
 import { listsSlice } from "./slices/lists";
-// import { pokemonSlice } from "./slices/pokemons";
+import { authSlice } from "./auth/";
+
 export const store = configureStore({
   reducer: {
-    counter: counterSlice.reducer,
-    card: cardSlice.reducer,
     cards: cardsSlice.reducer,
     lists: listsSlice.reducer,
-    // pokemons: pokemonSlice.reducer,
+    auth: authSlice.reducer,
   },
 });
 

@@ -12,7 +12,7 @@ import { authContext } from "../../context/authContext";
 import { EntriesContext } from "../../context/entries";
 import { ListsContext } from "../../context/lists";
 import { Entry } from "../../interfaces";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 import setNewCard from "../../services/setNewCard";
 import updateCard from "../../services/updateCard";
 import Definitions from "../Definitions";
@@ -118,7 +118,7 @@ const SingleCard = ({ entry }: Props) => {
   const onEntryDelete = async () => {
     setIsLoadingCard(true);
     const colRef = collection(
-      db,
+      FirebaseDB,
       "usuarios",
       userName,
       "lists",

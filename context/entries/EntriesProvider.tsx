@@ -8,7 +8,7 @@ import { entriesApi } from "../../api";
 
 import { EntriesContext, entriesReducer } from "./";
 import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 
 export interface EntriesState {
   entries: Entry[];
@@ -96,7 +96,12 @@ export const EntriesProvider: any = ({ children }: any) => {
     await entriesApi.delete(`/entries/${id}`);
   };
   const deleteCard = async (id: string) => {
-    const colRef = collection(db, "usuarios", "juanv87@gmail.com", "general");
+    const colRef = collection(
+      FirebaseDB,
+      "usuarios",
+      "juanv87@gmail.com",
+      "general"
+    );
     await deleteDoc(doc(colRef, "safa"));
   };
 

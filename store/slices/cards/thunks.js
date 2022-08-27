@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../lib/firebase/firebase";
+import { FirebaseDB } from "../../../lib/firebase/firebase";
 import { setCards, startLoadingCards } from "./cardsSlice";
 
 export const getCardsLists = (name) => {

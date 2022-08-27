@@ -24,8 +24,10 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 import setNewCard from "../../services/setNewCard";
+import { useAppDispatch } from "../../hooks";
+import { saveCard } from "../../store/slices/lists";
 interface Props {
   currentList?: string;
 }
@@ -76,7 +78,7 @@ const AddCard = ({ currentList }: Props) => {
     if (user) {
       setLoadingCards(true);
       const colRef = collection(
-        db,
+        FirebaseDB,
         "usuarios",
         user.email.split("@")[0],
         "lists"
@@ -117,6 +119,23 @@ const AddCard = ({ currentList }: Props) => {
   const onSearchWord = () => {
     setTitleSearch(titleValue);
   };
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(
+      saveCard({
+        titleValue,
+        userId: "juanv87",
+        descValue,
+        listValue,
+        meaningValue,
+        phraseValue,
+        favValue,
+        languajeValue,
+        imagenValue,
+      })
+    );
+  }, []);
 
   return (
     <>

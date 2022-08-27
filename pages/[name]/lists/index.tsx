@@ -7,7 +7,7 @@ import ListsList from "../../../components/lists/ListsList";
 import { GetServerSideProps } from "next";
 import { collection, getDocs } from "firebase/firestore";
 import { Entry, List } from "../../../interfaces";
-import { db } from "../../../lib/firebase/firebase";
+import { FirebaseDB } from "../../../lib/firebase/firebase";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { getCardsLists } from "../../../store/slices/lists";
 

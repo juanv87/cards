@@ -22,33 +22,20 @@ import ListsList from "../../components/lists/ListsList";
 import SingleList from "../../components/lists/SingleList";
 import { dbEntries } from "../../database";
 import { Entry, EntryStatus } from "../../interfaces/entry";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 
-import { changeTitle, addProperty } from "../../store/slices/counter";
 import { getCardsLists } from "../../store/slices/lists";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 interface Props {
+  name: string;
   entry: Entry;
 }
-interface UserProps {}
 
-const UserNickName: FC<Props> = ({ name }: any) => {
+const UserNickName: FC<Props> = ({ name }) => {
   const { dataUser, loadingUser } = useGetDataUser(name);
-  // const { counter } = useSelector((state) => state.counter);
-  // const { cardPrueba } = useSelector((state) => state.card);
-
-  // console.log("Card prueba", cardPrueba);
-
   const { lists = [], isLoading } = useAppSelector((state) => state.lists);
-
   const dispatch = useAppDispatch();
-
-  // const [titleValue, setTitleValue] = useState("");
-  // const onChangeTitule = () => {
-  //   dispatch(addProperty(titleValue));
-  // };
-
   useEffect(() => {
     dispatch(getCardsLists(name));
   }, []);
@@ -58,16 +45,8 @@ const UserNickName: FC<Props> = ({ name }: any) => {
       <Header />
       <ContainerDashBoard>
         {loadingUser ? "Cargando..." : "Hola, " + dataUser.name}
-        {/* <input
-          onChange={(e) => setTitleValue(e.target.value)}
-          type="text"
-          name="title"
-          id=""
-        /> */}
-        {/* <button onClick={onChangeTitule}>Cambiar titulo</button> */}
         <AddCard />
         <AddList />
-        {/* <button onClick={() => {}}>{counter}</button> */}
         {isLoading && "Cargando..."}
         <ListsList lists={lists} />
       </ContainerDashBoard>
@@ -77,14 +56,6 @@ const UserNickName: FC<Props> = ({ name }: any) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { name } = params as { name: string };
-
-  // const colRef = collection(db, "usuarios", name, "lists");
-  // const result = await getDocs(colRef);
-
-  // const lists = result.docs.map(
-  //   (doc) => ({ ...doc.data(), id: doc.id } as Entry)
-  // );
-
   return {
     props: {
       name,

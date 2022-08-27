@@ -25,7 +25,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { auth, db } from "../../../lib/firebase/firebase";
+import { FirebaseAuth, FirebaseDB } from "../../../lib/firebase/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { getCardsByList } from "../../../store/slices/lists";
@@ -38,6 +38,7 @@ interface Props {
 }
 
 const SingleListPage = ({ name, id, list }: Props) => {
+  console.log(name, id);
   const { title, chosenEmoji, description } = list;
   const [addCard, setAddCard] = useState(false);
   const [addNote, setAddNote] = useState(false);
@@ -48,8 +49,6 @@ const SingleListPage = ({ name, id, list }: Props) => {
   useEffect(() => {
     dispatch(getCardsByList(name, id));
   }, [id]);
-
-  console.log("Cards", cards);
 
   return (
     <>
@@ -139,14 +138,14 @@ export default SingleListPage;
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { name, id } = params as { name: string; id: string };
 
-  const colRef = collection(db, "usuarios", name, "lists", id, "cards");
+  const colRef = collection(FirebaseDB, "usuarios", name, "lists", id, "cards");
   const result = await getDocs(colRef);
 
   const cards = result.docs.map(
     (doc) => ({ ...doc.data(), id: doc.id } as Entry)
   );
 
-  const colRefList = collection(db, "usuarios", name, "lists");
+  const colRefList = collection(FirebaseDB, "usuarios", name, "lists");
   const resultList = await getDoc(doc(colRefList, id));
 
   const list = resultList.data();

@@ -7,7 +7,7 @@ import SingleCardQuizOptions from "./SingleCardQuizOptions";
 import FilterByEntries from "../FilterByEntries";
 
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 import { authContext } from "../../context/authContext";
 import { useAuth } from "../hooks/useAuth";
 import useGetLists from "../hooks/useGetLists";

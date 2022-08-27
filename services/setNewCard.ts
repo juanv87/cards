@@ -1,6 +1,6 @@
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { List } from "../interfaces";
-import { db } from "../lib/firebase/firebase";
+import { FirebaseDB } from "../lib/firebase/firebase";
 
 interface Props {
   titleValue: string;
@@ -27,7 +27,7 @@ const setNewCard = async ({
 }: Props) => {
   await setDoc(
     doc(
-      db,
+      FirebaseDB,
       "usuarios",
       userId,
       "lists",

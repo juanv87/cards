@@ -2,13 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
 interface CardsState {
-  page: number;
   cards: any[];
   isLoading: boolean;
 }
 
 const initialState: CardsState = {
-  page: 0,
   cards: [],
   isLoading: false,
 };

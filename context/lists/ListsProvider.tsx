@@ -3,7 +3,7 @@ import { List } from "../../interfaces";
 import { listsApi } from "../../api";
 import { ListsContext, listsReducer } from "./";
 import { collection, doc, setDoc, addDoc } from "firebase/firestore";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 
 export interface ListsState {
   lists: List[];
@@ -76,7 +76,7 @@ export const ListsProvider = ({ children }: any) => {
     //const colRef = collection(db, "usuarios", id, "lists", titleValue);
     await setDoc(
       doc(
-        db,
+        FirebaseDB,
         "usuarios",
         id,
         "lists",
@@ -99,7 +99,7 @@ export const ListsProvider = ({ children }: any) => {
     );
     await addDoc(
       collection(
-        db,
+        FirebaseDB,
         "usuarios",
         id,
         "lists",

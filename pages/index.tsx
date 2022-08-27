@@ -5,8 +5,20 @@ import { Container } from "../components/layouts/Container";
 import { Header } from "../components/layouts/Header";
 import Login from "../components/user/Login";
 import Register from "../components/user/Register";
+import { startGoogleSignIn } from "../store/auth";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { useMemo } from "react";
+
 const Home: NextPage = () => {
-  const { user } = useAuth();
+  const { status } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+
+  const isAuthenticating = useMemo(() => status === "checking", [status]);
+
+  const onGoogleSignIn = () => {
+    dispatch(startGoogleSignIn());
+  };
 
   return (
     <div>
@@ -38,6 +50,13 @@ const Home: NextPage = () => {
           <hr />
           <h2>Login</h2>
           <Login />
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={onGoogleSignIn}
+            disabled={isAuthenticating}
+          >
+            Login with Google
+          </button>
         </main>
       </Container>
     </div>

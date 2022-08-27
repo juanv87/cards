@@ -6,7 +6,7 @@ import { listEmojis } from "../emojis";
 import { Editor } from "@tinymce/tinymce-react";
 import { authContext } from "../../context/authContext";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 import setNewList from "../../services/setNewList";
 
 const AddList = () => {

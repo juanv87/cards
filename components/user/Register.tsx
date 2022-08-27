@@ -1,7 +1,7 @@
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import Router from "next/router";
 import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { db } from "../../lib/firebase/firebase";
+import { FirebaseDB } from "../../lib/firebase/firebase";
 import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
@@ -26,22 +26,25 @@ const Register = () => {
     try {
       setLoading(true);
       await signUp(user.email, user.password);
-      await setDoc(doc(db, "usuarios", user.email.split("@")[0]), {
+      await setDoc(doc(FirebaseDB, "usuarios", user.email.split("@")[0]), {
         name: user.email.split("@")[0],
         email: user.email,
         password: user.password,
         createdAt: new Date(),
         avatar: "",
       });
-      await addDoc(collection(db, "usuarios", user.email.split("@")[0], "lists"), {
-        description: "",
-        title: "",
-        createdAt: "",
-        status: "",
-        slugTitleValue: "",
-        chosenEmoji: "",
-        pinned: "",
-      });
+      await addDoc(
+        collection(FirebaseDB, "usuarios", user.email.split("@")[0], "lists"),
+        {
+          description: "",
+          title: "",
+          createdAt: "",
+          status: "",
+          slugTitleValue: "",
+          chosenEmoji: "",
+          pinned: "",
+        }
+      );
       setLoading(false);
       Router.push("/" + user.email.split("@")[0]);
     } catch (error: any) {
